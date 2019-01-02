@@ -1,13 +1,9 @@
 <!DOCTYPE html>
-<!--[if IE 9 ]>    <html dir="ltr" lang="en-US" class="ie9"> <![endif]-->
-<!--[if (gte IE 10)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
 <html dir="ltr" lang="en-US">
-<!--<![endif]-->
   <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="format-detection" content="telephone=no">
     <meta name="description" content="Another random website on the internet.">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
   	<link type="text/css" rel="stylesheet" href="style.css" />
 	<figure>
       <img src="images/DipperPines.png"
@@ -15,6 +11,10 @@
       <figcaption>One of my most used avatars, Dipper Pines from Gravity Falls.</figcaption>
     </figure>
     <title>StrawberryMaster's World</title>
+	<!-- the below three lines are a fix to get HTML5 semantic elements working in old versions of Internet Explorer-->
+    <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
   </head> 
   <body>
     <h1 style="padding-right: 255px;">Oh, hi there!</h1>
@@ -22,6 +22,8 @@
 	I'm StrawberryMaster, another random person wandering around the internet. I'm a cookie connoisseur and a wonderful storyteller.
 	</p>
 	<h2>Some of my works</h2>
-	* Brazil (2018) — An upcoming scenario intended for a game called President Infinity.
+	<ul>
+	  <li>Brazil (2018) — An upcoming scenario intended for a game called President Infinity.</li>
+	</ul>
   </body>
 </html>

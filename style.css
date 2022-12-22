@@ -1,9 +1,24 @@
 body {
-	background: #f9f5f1;
-	font-family: Arial, sans-serif;
+	background: url(//pages-themes.github.io/leap-day/assets/images/body-background.png);
+	background-color: #f9f5f1;
+	font-family: Georgia, Arial, sans-serif;
 	text-align: center;
 }
 
+h1 {
+	display: flex;
+	font-size: 2.25rem;
+	font-weight: 500;
+	margin-bottom: 5vh;
+}
+
+h2 {
+	display: flex;
+	font-size: 1.75rem;
+	font-weight: 400;
+	margin-bottom: 5vh;
+}
+
 figcaption {
-	font-size: 75%;
+	font-size: 0.75rem;
 }

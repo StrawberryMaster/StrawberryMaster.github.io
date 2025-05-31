@@ -1,72 +1,65 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US" class="scroll-smooth bg-black">
+<html lang="en-US">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="strawberrymaster’s portfolio">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The portfolio of the former Secretary of Culture, StrawberryMaster.">
   <meta name="keywords" content="strawberrymaster, code, forks, stories, fun">
   <meta name="author" content="StrawberryMaster">
-  <meta property="og:title" content="strawberrymaster’s portfolio">
-  <meta property="og:description" content="howdy! i’m strawberrymaster. check out my code, projects, and stuff">
-  <meta name="theme-color" content="#a1ff8c">
-  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="StrawberryMaster's portfolio">
+  <meta property="og:description" content="The portfolio of the former Secretary of Culture, StrawberryMaster.">
+  <meta name="theme-color" content="#8b4513">
   <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
-  <link type="text/css" rel="stylesheet" href="./style.css" />
   <title>StrawberryMaster's World</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
-
-  <body>
-    <div class="container">
-      <div class="breathe"></div>
-      <div class="flex-grow">
-        <div class="header-flex">
-          <img src="./images/DipperPines.png" width="64" height="64" alt="dipper pines icon">
-          <h1>strawberrymaster</h1>
-        </div>
-        <hr>
-        <div class="h-8"></div>
-        <h2>hey, i’m strawberrymaster</h2>
+  <div class="wrapper">
+    <header class="header">
+      <img src="./images/DipperPines.png" width="128" height="128" alt="dipper pines icon">
+      <div class="header-text">
+        <h1>strawberrymaster</h1>
         <p>coder · fork enthusiast · storyteller</p>
-        <div class="h-8"></div>
-        <div class="box">
-          <p>howdy! i’m <b>StrawberryMaster</b>, a writer. usually i just fork projects, but i also have some other stuff
-            of my own which you can find by snooping around.</p>
-          <p>i likely won’t use this site much, but you can find most of my recent works and updates @ <a
-              href="https://opapeldetrouxa.neocities.org" target="_blank">my personal site</a>.</p>
-        </div>
-        <div class="box">
-          <p><b>tech i wield:</b> javascript, typescript, python, html/css, git, dart (yes.), java, and many, many more!</p>
-          <p><b>other skills:</b> storytelling (whoa!), writing in general, and pretending to not be lazy</p>
-        </div>
-        <div class="box">
-          <p>some of my projects</p>
-          <span class="flex flex-wrap items-center gap-2">
-            <b>hhwvalues</b> <span class="subtle">/</span> <a href="https://github.com/StrawberryMaster/HHWValues"
-              target="_blank">repo</a>
-          </span>
-          <p>a fork of sapplyvalues tailored for the hhw community.</p>
-          <span class="flex flex-wrap items-center gap-2">
-            <b>cyclone simulator</b> <span class="subtle">/</span> <a
-              href="https://github.com/StrawberryMaster/cyclone-sim" target="_blank">repo</a>
-          </span>
-          <p>a fork of monsoonjr99’s cyclone simulator. it works, though.</p>
-          <span class="flex flex-wrap items-center gap-2">
-            <b>experiments</b> <span class="subtle">/</span> <a href="https://github.com/StrawberryMaster/experiments"
-              target="_blank">repo</a>
-          </span>
-          <p>sometimes i dump code fragments here and see what sticks. my wallet’s down there, too!</p>
-        </div>
-        <footer>
-          <hr>
-          <p class="subtle">"we had finished dinner. we’re now having dessert. and we had the most beautiful piece of
-            chocolate cake that you’ve ever seen [...]"</p>
-        </footer>
       </div>
-    </div>
-    <script src="https://kit.fontawesome.com/1f4ba0cbfe.js" crossorigin="anonymous"></script>
-  </body>
+    </header>
+
+    <main class="main-content">
+      <section>
+        <p>howdy! i'm <strong>StrawberryMaster</strong>, a writer. usually i just fork projects, but i also have some
+          other stuff of my own which you can find by snooping around.</p>
+        <p>i likely won't use this site much, but you can find most of my recent works and updates @ <a
+            href="https://opapeldetrouxa.neocities.org" target="_blank" rel="noopener">my personal site</a>.</p>
+      </section>
+
+      <section>
+        <p><strong>tech i wield:</strong> javascript, typescript, python, html/css, git, dart (yes.), java, and many,
+          many more!</p>
+        <p><strong>other skills:</strong> storytelling (whoa!), writing in general, and pretending to not be lazy</p>
+      </section>
+
+      <section>
+        <h2>some of my projects</h2>
+
+        <p><a href="https://github.com/StrawberryMaster/HHWValues" target="_blank" rel="noopener">hhwvalues</a><br>
+          a fork of sapplyvalues tailored for the hhw community.</p>
+
+        <p><a href="https://github.com/StrawberryMaster/cyclone-sim" target="_blank" rel="noopener">cyclone
+            simulator</a><br>
+          a fork of monsoonjr99's cyclone simulator. it works, though.</p>
+
+        <p><a href="https://github.com/StrawberryMaster/experiments" target="_blank" rel="noopener">experiments</a><br>
+          sometimes i dump code fragments here and see what sticks. my wallet's down there, too!</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <hr>
+      <p>"we had finished dinner. we're now having dessert. and we had the most beautiful piece of chocolate cake that
+        you've ever seen [...]"</p>
+    </footer>
+  </div>
+</body>
 
 </html>

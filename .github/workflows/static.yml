@@ -31,21 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Setup Node.js
-        uses: actions/setup-node@main
-        with:
-          node-version: '22'
       - name: Setup Pages
         uses: actions/configure-pages@main
-      - name: Install dependencies
-        run: npm ci
-      - name: Build project
-        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@main
         with:
-          # Upload the dist directory
-          path: 'dist'
+          # Upload entire repository
+          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Source code for "2016: A Lifetime of This"</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Roboto+Slab:wght@700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #f4f1eb;
+            --container-bg: #ffffff;
+            --text-color: #3d3d3d;
+            --heading-color: #1a1a1a;
+            --accent-color: #0056b3;
+            --border-color: #d1d1d1;
+            --info-box-bg: #eef6ff;
+            --font-main: 'Inter', Arial, sans-serif;
+            --font-heading: 'Roboto Slab', "Times New Roman", serif;
+            --font-code: 'Consolas', 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: var(--font-main);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: var(--container-bg);
+            padding: 30px 40px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 2.25rem;
+            color: var(--heading-color);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            color: var(--heading-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        h2.section-title {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--heading-color);
+            margin-top: 40px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-block-wrapper h3 {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--heading-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: #003a75;
+            text-decoration: underline;
+        }
+
+        .instructions {
+            background-color: var(--info-box-bg);
+            border: 1px solid #bce0ff;
+            border-radius: 6px;
+            padding: 5px 20px 10px 20px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        .instructions p {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-layout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .code-block-wrapper {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            background-color: #fdfdfd;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            position: relative;
+        }
+
+        pre.code-content {
+            flex-grow: 1;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-style: inset;
+            padding: 15px;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            font-family: var(--font-main);
+            font-size: 0.8rem;
+            font-weight: 600;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background-color: #e0e0e0;
+            border-color: #bbb;
+            transform: translateY(-1px);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-btn.copied {
+            background-color: #28a745;
+            color: white;
+            border-color: #218838;
+        }
+
+        .loading-state,
+        .error-state {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #777;
+            font-style: italic;
+        }
+
+        .error-state {
+            color: #d9534f;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>2016: A Lifetime of This</h1>
+            <p>This page contains the code snippets for the 2016 mod "A Lifetime of This". Or "The Hillary Trail". Or
+                2016b, not to be confused with the other 2016b, or whatever you want to call it! The content is fetched
+                live from the source, but you can also access it <a
+                    href="https://gist.github.com/StrawberryMaster/d14c1b89cbf1850c93d1f0836aaf89b6#file-2016b_code1"
+                    target="_blank">here</a>. Use the copy buttons for convenience.</p>
+
+            <div class="instructions">
+                <p>For <strong><a href="https://campaigntrailshowcase.com/campaign-trail/" target="_blank">Campaign
+                            Trail Showcase</a></strong>, click the "Custom Mod Loader" button, paste Code 1 and 2 into
+                    their sections, and click "Play Custom Mod." I recommend you give it a name to play the game & keep
+                    track of achievements more easily.</p>
+                <p>For <strong><a href="https://newcampaigntrail.com/campaign-trail/" target="_blank">New Campaign
+                            Trail</a></strong>, click "Mod Loader," then the "Details" tab on the upper right, and paste
+                    the codes into the appropriate fields. Note that achievements do not work on NCT yet.</p>
+            </div>
+        </header>
+
+        <main>
+            <h2 class="section-title">Clinton</h2>
+
+            <div class="code-layout-container">
+                <div class="code-block-wrapper">
+                    <h3>Code 1</h3> 
+                    <button class="copy-btn" data-target="#code1-target">Copy</button>
+                    <pre id="code1-target" class="code-content"><div class="loading-state">Loading...</div></pre>
+                </div>
+
+                <div class="code-block-wrapper">
+                    <h3>Code 2 (Kaine/Booker/Patrick)</h3>
+                    <button class="copy-btn" data-target="#code2-target">Copy</button>
+                    <pre id="code2-target" class="code-content"><div class="loading-state">Loading...</div></pre>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p><a href="../index.html">« back to home</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const code1_url = 'https://gist.githubusercontent.com/StrawberryMaster/d14c1b89cbf1850c93d1f0836aaf89b6/raw/040249c97f4928984c07fe08030218f1d9a0a45a/2016b_code1';
+            const code2_url = 'https://gist.githubusercontent.com/StrawberryMaster/d14c1b89cbf1850c93d1f0836aaf89b6/raw/040249c97f4928984c07fe08030218f1d9a0a45a/2016b_code2_ClintonKaine';
+
+            const code1_target = document.getElementById('code1-target');
+            const code2_target = document.getElementById('code2-target');
+
+            const fetchAndDisplayContent = (url, targetElement) => {
+                fetch(url)
+                    .then(response => {
+                        if (!response.ok) throw new Error(`Zoinks! Failed to fetch: ${response.statusText}`);
+                        return response.text();
+                    })
+                    .then(data => {
+                        targetElement.textContent = data;
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        targetElement.innerHTML = `<div class="error-state">Failed to load content.</div>`;
+                    });
+            };
+
+            fetchAndDisplayContent(code1_url, code1_target);
+            fetchAndDisplayContent(code2_url, code2_target);
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetSelector = button.dataset.target;
+                    const codeElement = document.querySelector(targetSelector);
+
+                    if (codeElement) {
+                        navigator.clipboard.writeText(codeElement.textContent).then(() => {
+                            const originalText = button.textContent;
+                            button.textContent = 'Copied!';
+                            button.classList.add('copied');
+
+                            setTimeout(() => {
+                                button.textContent = originalText;
+                                button.classList.remove('copied');
+                            }, 2000);
+                        }).catch(err => {
+                            console.error('Jinkies! Failed to copy text:', err);
+                            alert('Failed to copy text. See console for details.');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

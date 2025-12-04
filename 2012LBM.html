@@ -20,6 +20,7 @@
             --accent-color: #0056b3;
             --border-color: #d1d1d1;
             --info-box-bg: #eef6ff;
+            --success-color: #28a745;
             --font-main: 'Inter', Arial, sans-serif;
             --font-heading: 'Roboto Slab', "Times New Roman", serif;
             --font-code: 'Consolas', 'Courier New', Courier, monospace;
@@ -31,24 +32,50 @@
             color: var(--text-color);
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
             max-width: 900px;
-            margin: 20px auto;
+            margin: 10px auto;
             background-color: var(--container-bg);
-            padding: 30px 40px;
+            padding: 25px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
+        .header-content {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .header-content {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+            .header-text {
+                flex: 1;
+            }
+        }
+
+        .header-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 120px;
+            border-radius: 4px;
+            object-fit: contain;
+            align-self: center;
+        }
+
         h1 {
             font-family: var(--font-heading);
-            font-size: 2.25rem;
+            font-size: 1.8rem;
             color: var(--heading-color);
             text-align: center;
             border-bottom: 2px solid var(--border-color);
@@ -56,139 +83,124 @@
             margin-bottom: 20px;
         }
 
-        h2 {
+        .section-title {
             font-family: var(--font-heading);
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             color: var(--heading-color);
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        h2.section-title {
-            font-family: var(--font-heading);
-            font-size: 1.8rem;
-            color: var(--heading-color);
-            margin-top: 40px;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
+            margin-top: 30px;
             border-bottom: 1px solid var(--border-color);
-        }
-
-        .code-block-wrapper h3 {
-            font-family: var(--font-heading);
-            font-size: 1.2rem;
-            color: var(--heading-color);
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-
-        p {
-            margin-bottom: 1rem;
         }
 
         a {
             color: var(--accent-color);
             font-weight: 600;
             text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        a:hover {
-            color: #003a75;
-            text-decoration: underline;
         }
 
         .instructions {
             background-color: var(--info-box-bg);
             border: 1px solid #bce0ff;
             border-radius: 6px;
-            padding: 5px 20px 10px 20px;
+            padding: 15px;
             margin: 20px 0;
-            font-size: 0.95rem;
-        }
-
-        .instructions p {
-            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .code-layout-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 25px;
             margin-top: 25px;
         }
 
+        @media (min-width: 768px) {
+            .code-layout-container {
+                flex-direction: row;
+            }
+        }
+
         .code-block-wrapper {
             flex: 1;
-            min-width: 300px;
             display: flex;
             flex-direction: column;
             background-color: #fdfdfd;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 15px;
-            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
-        pre.code-content {
-            flex-grow: 1;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-style: inset;
-            padding: 15px;
-            font-family: var(--font-code);
-            font-size: 0.9rem;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            height: 400px;
-            overflow-y: auto;
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #eee;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-header h3 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
         }
 
         .copy-btn {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            padding: 6px 12px;
+            padding: 8px 16px;
             font-family: var(--font-main);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: 600;
-            background-color: #f0f0f0;
+            background-color: #fff;
+            color: #333;
             border: 1px solid #ccc;
             border-radius: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
+            min-width: 80px;
+            touch-action: manipulation; 
         }
 
         .copy-btn:hover {
-            background-color: #e0e0e0;
-            border-color: #bbb;
-            transform: translateY(-1px);
+            background-color: #f0f0f0;
         }
 
         .copy-btn:active {
-            transform: translateY(0);
+            transform: translateY(2px);
         }
 
         .copy-btn.copied {
-            background-color: #28a745;
+            background-color: var(--success-color);
             color: white;
-            border-color: #218838;
+            border-color: var(--success-color);
         }
 
-        .loading-state,
-        .error-state {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            color: #777;
+        pre.code-content {
+            margin: 0;
+            padding: 15px;
+            background-color: #fafafa;
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+            color: #555;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 250px; 
+            overflow-y: auto;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+        }
+
+        .preview-note {
+            font-size: 0.75rem;
+            color: #888;
+            padding: 5px 15px;
+            background: #fafafa;
             font-style: italic;
+            text-align: right;
         }
 
-        .error-state {
-            color: #d9534f;
-            font-weight: bold;
-        }
+        .loading-state { color: #777; font-style: italic; padding: 20px; text-align: center;}
+        .error-state { color: #d9534f; font-weight: bold; padding: 20px; text-align: center;}
 
         footer {
             text-align: center;
@@ -206,12 +218,17 @@
     <div class="container">
         <header>
             <h1>2012: Little Big Man</h1>
-            <img src="https://file.garden/aNtAfG887DiA_7lO/2012LBM/Code1/XBiCnJX.jpeg"
-                alt="2012: Little Big Man" style="display: block; margin: 0 auto; max-width: 100%; height: 100px; float: right; margin-left: 20px;">
-            <p>This page contains the code snippets for The Campaign Trail mod "2012: Little Big Man", or just Little Big Man. The content is fetched
+            
+            <div class="header-content">
+                <div class="header-text">
+                    <p>This page contains the code snippets for The Campaign Trail mod "2012: Little Big Man", or just Little Big Man. The content is fetched
                 live from the source, but you can also access it <a
                     href="https://gist.github.com/StrawberryMaster/d14c1b89cbf1850c93d1f0836aaf89b6#file-2016b_code1"
                     target="_blank">here</a>. Use the copy buttons for convenience.</p>
+                    <p><strong>Note for mobile users:</strong> the code previews below are truncated to prevent your browser from freezing. The "Copy" button will still copy the full code.</p>
+                </div>
+                <img class="header-img" src="https://file.garden/aNtAfG887DiA_7lO/2012LBM/Code1/XBiCnJX.jpeg" alt="2012: Little Big Man">
+            </div>
 
             <div class="instructions">
                 <p>For <strong><a href="https://campaigntrailshowcase.com/campaign-trail/" target="_blank">Campaign
@@ -229,15 +246,19 @@
 
             <div class="code-layout-container">
                 <div class="code-block-wrapper">
-                    <h3>Code 1</h3> 
-                    <button class="copy-btn" data-target="#code1-target">Copy</button>
-                    <pre id="code1-target" class="code-content"><div class="loading-state">Loading...</div></pre>
+                    <div class="code-header">
+                        <h3>Code 1</h3>
+                        <button class="copy-btn" id="btn-code1">Copy</button>
+                    </div>
+                    <pre id="view-code1" class="code-content"><div class="loading-state">Loading...</div></pre>
                 </div>
 
                 <div class="code-block-wrapper">
-                    <h3>Code 2 (Biden/etc.)</h3>
-                    <button class="copy-btn" data-target="#code2-target">Copy</button>
-                    <pre id="code2-target" class="code-content"><div class="loading-state">Loading...</div></pre>
+                    <div class="code-header">
+                        <h3>Code 2 (Biden/etc.)</h3>
+                        <button class="copy-btn" id="btn-code2">Copy</button>
+                    </div>
+                    <pre id="view-code2" class="code-content"><div class="loading-state">Loading...</div></pre>
                 </div>
             </div>
         </main>
@@ -247,57 +268,93 @@
         </footer>
     </div>
 
+    <textarea id="hidden-copy-area" style="position: absolute; left: -9999px; top: 0;" aria-hidden="true"></textarea>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const code1_url = 'https://gist.githubusercontent.com/StrawberryMaster/a0a81458f6c46ccd6b99a0f8e011e065/raw/2012LBM_code1';
-            const code2_url = 'https://gist.githubusercontent.com/StrawberryMaster/a0a81458f6c46ccd6b99a0f8e011e065/raw/2012LBM_code2';
+            const urls = {
+                code1: 'https://gist.githubusercontent.com/StrawberryMaster/a0a81458f6c46ccd6b99a0f8e011e065/raw/2012LBM_code1',
+                code2: 'https://gist.githubusercontent.com/StrawberryMaster/a0a81458f6c46ccd6b99a0f8e011e065/raw/2012LBM_code2'
+            };
 
-            const code1_target = document.getElementById('code1-target');
-            const code2_target = document.getElementById('code2-target');
+            // store full content in memory, do not dump all into DOM
+            const memoryBank = {
+                code1: null,
+                code2: null
+            };
 
-            const fetchAndDisplayContent = (url, targetElement) => {
+            const loadContent = (key, url) => {
+                const displayEl = document.getElementById(`view-${key}`);
+                const btn = document.getElementById(`btn-${key}`);
+
                 fetch(url)
                     .then(response => {
-                        if (!response.ok) throw new Error(`Zoinks! Failed to fetch: ${response.statusText}`);
+                        if (!response.ok) throw new Error('Network error');
                         return response.text();
                     })
                     .then(data => {
-                        targetElement.textContent = data;
+                            memoryBank[key] = data;
+                            // only show first 2000 chars.
+                        displayEl.textContent = data.substring(0, 2000) + '... \n\n[display truncated for performance, use the Copy button for full code.]';
+                        btn.disabled = false;
                     })
-                    .catch(error => {
-                        console.error('Fetch error:', error);
-                        targetElement.innerHTML = `<div class="error-state">Failed to load content.</div>`;
+                    .catch(err => {
+                        displayEl.innerHTML = '<div class="error-state">Failed to load content. Check connection.</div>';
+                        console.error(err);
                     });
             };
 
-            fetchAndDisplayContent(code1_url, code1_target);
-            fetchAndDisplayContent(code2_url, code2_target);
+            const copyToClipboard = (text, btnElement) => {
+                if (!text) return;
 
-            document.querySelectorAll('.copy-btn').forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetSelector = button.dataset.target;
-                    const codeElement = document.querySelector(targetSelector);
+                const originalText = btnElement.textContent;
+                
+                const handleSuccess = () => {
+                    btnElement.textContent = 'Copied!';
+                    btnElement.classList.add('copied');
+                    setTimeout(() => {
+                        btnElement.textContent = originalText;
+                        btnElement.classList.remove('copied');
+                    }, 2000);
+                };
 
-                    if (codeElement) {
-                        navigator.clipboard.writeText(codeElement.textContent).then(() => {
-                            const originalText = button.textContent;
-                            button.textContent = 'Copied!';
-                            button.classList.add('copied');
+                const handleError = (err) => {
+                    console.error('Copy failed', err);
+                    btnElement.textContent = 'Error!';
+                    setTimeout(() => btnElement.textContent = originalText, 2000);
+                };
 
-                            setTimeout(() => {
-                                button.textContent = originalText;
-                                button.classList.remove('copied');
-                            }, 2000);
-                        }).catch(err => {
-                            console.error('Jinkies! Failed to copy text:', err);
-                            alert('Failed to copy text. See console for details.');
-                        });
-                    }
-                });
-            });
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text)
+                        .then(handleSuccess)
+                        .catch(() => fallbackCopy(text, handleSuccess, handleError));
+                } else {
+                    fallbackCopy(text, handleSuccess, handleError);
+                }
+            };
+
+            // fallback for older browsers
+            const fallbackCopy = (text, onSuccess, onError) => {
+                try {
+                    const textArea = document.getElementById('hidden-copy-area');
+                    textArea.value = text;
+                    textArea.focus();
+                    textArea.select();
+                    const successful = document.execCommand('copy');
+                    if (successful) onSuccess();
+                    else onError();
+                } catch (err) {
+                    onError(err);
+                }
+            };
+
+            loadContent('code1', urls.code1);
+            loadContent('code2', urls.code2);
+
+            document.getElementById('btn-code1').addEventListener('click', (e) => copyToClipboard(memoryBank.code1, e.target));
+            document.getElementById('btn-code2').addEventListener('click', (e) => copyToClipboard(memoryBank.code2, e.target));
         });
     </script>
 
 </body>
-
 </html>

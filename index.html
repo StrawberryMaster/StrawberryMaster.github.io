@@ -1,65 +1,486 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="The portfolio of the former Secretary of Culture, StrawberryMaster.">
-  <meta name="keywords" content="strawberrymaster, code, forks, stories, fun">
+  <title>Recanto do Papel</title>
+  <meta name="description"
+    content="The full works of StrawberryMaster, including analyses, fiction, recommendations and other stuff you would find in a local whoop-de-do. There’s some fun stuff in here, we think.">
+  <meta name="keywords"
+    content="strawberrymaster, code, coding, forks, stories, fun, collection, reading, gaming, poetry, books, albums, music">
   <meta name="author" content="StrawberryMaster">
-  <meta property="og:title" content="StrawberryMaster's portfolio">
-  <meta property="og:description" content="The portfolio of the former Secretary of Culture, StrawberryMaster.">
-  <meta name="theme-color" content="#8b4513">
-  <link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon">
-  <title>StrawberryMaster's World</title>
-  <link rel="stylesheet" href="./style.css">
+  <meta name="theme-color" content="#00b6d5">
+  <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+  <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="icon" type="image/x-icon" href="./files/wizardry.ico">
+  <link rel="canonical" href="https://strawberrymaster.github.io/">
+  <script src="scripts/quotes.js" defer></script>
+  <script src="scripts/albums.js" defer></script>
+  <script src="scripts/table.js" defer></script>
 </head>
 
 <body>
-  <div class="wrapper">
-    <header class="header">
-      <img src="./images/DipperPines.png" width="128" height="128" alt="dipper pines icon">
-      <div class="header-text">
-        <h1>strawberrymaster</h1>
-        <p>coder · fork enthusiast · storyteller</p>
+  <header id="construction-bar">Under construction</header>
+  <header id="header-area">
+    <header id="header-image"></header>
+    <nav id="navbar">
+      <ul>
+        <li><a href="./" aria-current="page"><u>Home</u></a></li>
+        <li><a href="./teahouse">Teahouse</a></li>
+        <li><a href="./collections">Collections</a></li>
+        <li><a href="./analysis">Analysis</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-container">
+    <div class="story-card" style="margin: .5rem 0; padding: 1rem"><b>NEW:</b> <a href="/analysis/simpsons">An analysis
+        on "No More Simpsons", out now, for real real, not for play play!</a><br /><br /><b>ALSO NEW:</b> my latest
+      work, <a href="https://archiveofourown.org/works/69514971" target="_blank">The Road to Mandalay</a>, is
+      out!<br /><br /><b>SEE ALSO:</b> 2012: Little Big Man is out! Play it <a
+        href="https://campaigntrailshowcase.com/campaign-trail/?modName=2012%20-%20Little%20Big%20Man"
+        target="_blank">here</a>.</div>
+    <img id="main-container-picture" src="/files/dipper.jpg"
+      alt="Dipper from Gravity Falls getting whacked in the head by a golf club">
+    <h1>Howdy!</h1>
+    <p id="daily-message"
+      style="font-size: 0.9rem; margin-top: -1rem; margin-bottom: 1.5rem; opacity: 0.8; font-style: italic;">
+      It’s a lovely day and I’m here.
+    </p>
+
+    <script>
+      (function () {
+        const days = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ];
+
+        const moods = {
+          Sunday: "It’s Sunday. Things are quiet, and I’m here.",
+          Monday: "It’s Monday, but I’m here.",
+          Tuesday: "It’s Tuesday and the week has started moving.",
+          Wednesday: "It’s Wednesday, my favorite day of the week.",
+          Thursday: "It’s Thursday and things feel almost settled.",
+          Friday: "It’s Friday. I’m still here.",
+          Saturday: "It’s Saturday, which feels like a small gift."
+        };
+
+        const dayColors = {
+          Sunday: "color-mix(in srgb, var(--accent-color), white 45%)",
+          Monday: "color-mix(in srgb, var(--accent-color), black 35%)",
+          Tuesday: "color-mix(in srgb, var(--accent-color), black 20%)",
+          Wednesday: "color-mix(in srgb, var(--accent-color), currentColor 50%)",
+          Thursday: "color-mix(in srgb, var(--accent-color), white 20%)",
+          Friday: "color-mix(in srgb, var(--accent-color), white 10%)",
+          Saturday: "color-mix(in srgb, var(--accent-color), white 35%)"
+        };
+
+        const today = days[new Date().getDay()];
+        const msg = document.getElementById("daily-message");
+
+        if (!msg) return;
+
+        msg.innerText = moods[today] || "I’m here.";
+
+        if (dayColors[today]) {
+          msg.style.setProperty("--day-color", dayColors[today]);
+        }
+      })();
+    </script>
+    <p>I’m still figuring out what to place here, but it’s good to see you made it! I’m 22 and Brazilian, and I’m a bit
+      of a cooking connoisseur. Besides that, I enjoy art,
+      <span class="mytooltip">music in general
+        <span class="mytooltiptext">
+          <img src="/files/radiohead.jpg"
+            alt="The five members of Radiohead. Four of them are in the background; in the lower right corner you have a man holding a sign that reads ‘if we smile, can we go?’.">Unfortunately
+          including Radiohead.
+        </span>
+      </span>,
+      and good ol’ videogames. The name is <b>Felipe</b>, by the way, although I’ve also been called Papel (as in, <a
+        href="https://www.britannica.com/technology/paper" target="_blank">paper</a>), Pipe (not as in an actual pipe,
+      but as a more intimate way of saying my name), SM (as in <b>s</b>trawberry <b>m</b>aster), among many other
+      things.
+    </p>
+
+    <p>I studied Computer Science, which is nothing particularly unusual, but becomes more interesting when I tell you
+      that I actually intended to <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/DidntSeeThatComing"
+        target="_blank">major in journalism</a>. The result of this was discovering my love for the beautiful language
+      known as <a href="https://www.britannica.com/technology/JavaScript" target="_blank">JavaScript</a>, as well as my
+      hatred for its half-brother, <a href="https://www.britannica.com/technology/Java-computer-programming-language"
+        target="_blank">Java</a> (not the island). This also means that yes, unfortunately, I write too. That being
+      said, it’s a lot more fun than you might expect — most of my works, although fairly humorous in nature, are the
+      byproduct of my dabbling into <a href="https://en.wiktionary.org/wiki/human_nature" target="_blank">human
+        nature</a>.</p>
+
+    <p>A side effect of this has resulted in me working in a variety of communities with an array of themes, from <a
+        href="https://en.wiktionary.org/wiki/weather" target="_blank">weather</a> to <a
+        href="https://en.wiktionary.org/wiki/gaming" target="_blank">gaming</a> to <a
+        href="https://en.wiktionary.org/wiki/politics" target="_blank">politics</a> to many other things in between. Due
+      to the lack of a random item generator on this page, I can tell you that one of my favorite bands is
+      <span class="mytooltip">Television
+        <span class="mytooltiptext">
+          <img src="/files/television.webp"
+            alt="The four members of Television. They’re all staring at the camera.">Especially the work of Lloyd
+          (second, from left to right) and Verlaine (third in photo).
+        </span>
+      </span>, and one band which I personally recommend is the Mexican city pop duo
+      <span class="mytooltip">Juanpalitoschinos
+        <span class="mytooltiptext">
+          <img src="/files/juanpalitoschinos.webp"
+            alt="The two members of Juanpalitoschinos. They’re all staring at the camera.">God, I miss them so much.
+        </span>
+      </span>.
+    </p>
+
+    <p><b>Psst:</b> If you click <a href="./teahouse">here</a>, you’ll be taken to the Teahouse, which is essentially a
+      database of all my existing stories and essays. Initially it was supposed to be a sandbox, but that idea didn’t
+      age quite well. Additionally, you can click <a href="./collections">here</a> to be taken to the Collections,
+      which, as the title suggests, is a collection. Specifically, a collection of my serious, more spooky works: the
+      stuff I’ve coded.</p>
+
+    <p><b>Psst again:</b> this is a mirror of my original site, which you can access <a
+        href="https://opapeldetrouxa.neocities.org/" target="_blank">here</a>. This version may be outdated.</p>
+
+    <p>If you wanna get in touch, you can send me a message on the <a href="https://twitter.com/opapeldetrouxa"
+        target="_blank">late bl</a><a href="https://twitter.com/pipehuncho" target="_blank">ue bird</a> social media
+      site. Alternatively, I am on the <a href="https://bsky.app/profile/opapeldetrouxa.neocities.org"
+        target="_blank">blue butterfly</a> site and the <a href="https://www.nationstates.net/nation=felpolandia"
+        target="_blank">nation simulator</a> site (where I was <a
+        href="https://www.nationstates.net/page=bestnation/leaderboard=1" target="_blank">once crowned Best Nation in
+        the World</a>, apparently), but you can always just send me a note <a
+        href="https://neocities.org/site/opapeldetrouxa" target="_blank">on my profile</a>. Take care and have fun!</p>
+
+    <h2>Recommended listening</h2>
+
+    <p>This digital collage of albums that have been rotating in my brain recently, or for a while now, at least. Some
+      are classics, some are guilty pleasures, and some are just plain weird. (I really like the weird ones.) Presented
+      in no particular order, other than this really nice 5x5 grid; if you refresh the page, you will see!</p>
+
+    <div class="album-grid" id="album-grid"></div>
+
+    <h2>Recommended reading</h2>
+
+    <p>Here are some titles that might enhance your understanding of some of the background and social issues
+      entertained in this site, my stories, or whatever is sandwiched between them. Feel free to click around the table
+      &amp; its headings!</p>
+
+    <p><b>Warning:</b> all are filled with provocative ideas and events; we disavow any responsibility for encouraging
+      deep thought.</p>
+    <div class="sort-controls">
+      <span>Sort by:</span>
+      <button data-sort-by="title" data-sort-type="text">Title</button>
+      <button data-sort-by="author" data-sort-type="text">Author</button>
+      <button data-sort-by="date" data-sort-type="date">Publication date</button>
+    </div>
+
+    <div id="reading-list-grid" class="card-grid">
+      <div class="book-card" data-title="a crack-up at the race riots" data-author="harmony korine"
+        data-date="1998-04-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1525595478i/66143.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>A Crack-Up at the Race Riots</em></h3>
+          <p class="author">by Harmony Korine</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Apr 1998</p>
+            <p><strong>Publisher:</strong> Doubleday</p>
+            <p><a href="https://www.amazon.com/Crack-Up-Race-Riots-Harmony-Korine/dp/0385485883" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
       </div>
-    </header>
 
-    <main class="main-content">
-      <section>
-        <p>howdy! i'm <strong>StrawberryMaster</strong>, a writer. usually i just fork projects, but i also have some
-          other stuff of my own which you can find by snooping around.</p>
-        <p>i likely won't use this site much, but you can find most of my recent works and updates @ <a
-            href="https://opapeldetrouxa.neocities.org" target="_blank" rel="noopener">my personal site</a>.</p>
-      </section>
+      <div class="book-card" data-title="a dama do banheiro" data-author="brendon s. santos" data-date="2022-12-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1672778422i/75553152.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>A Dama do Banheiro</em></h3>
+          <p class="author">by Brendon S. Santos</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Dec 2022</p>
+            <p><strong>Publisher:</strong> Self-published</p>
+            <p><a href="https://www.amazon.com/dp/B0BQQMHK3T" target="_blank" rel="noopener noreferrer">Find on
+                Amazon</a></p>
+          </div>
+        </div>
+      </div>
 
-      <section>
-        <p><strong>tech i wield:</strong> javascript, typescript, python, html/css, git, dart (yes.), java, and many,
-          many more!</p>
-        <p><strong>other skills:</strong> storytelling (whoa!), writing in general, and pretending to not be lazy</p>
-      </section>
+      <div class="book-card" data-title="brasil apart: 1964–2019" data-author="perry anderson" data-date="2019-10-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1569922284l/52161428.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Brasil Apart: 1964–2019</em></h3>
+          <p class="author">by Perry Anderson</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Oct 2019</p>
+            <p><strong>Publisher:</strong> Verso</p>
+            <p><a href="https://www.penguinrandomhouse.com/books/622950/brazil-apart-by-perry-anderson/" target="_blank"
+                rel="noopener noreferrer">Find on PRH</a></p>
+          </div>
+        </div>
+      </div>
 
-      <section>
-        <h2>some of my projects</h2>
+      <div class="book-card" data-title="cardboard city" data-author="katarina jovanovic" data-date="2023-01-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1685368076i/125171471.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Cardboard City</em></h3>
+          <p class="author">by Katarina Jovanovic</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Jan 2023</p>
+            <p><strong>Publisher:</strong> Tradewind Books</p>
+            <p><a href="https://www.amazon.com/Cardboard-City-Katarina-Jovanovic/dp/1990598102" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
 
-        <p><a href="https://github.com/StrawberryMaster/HHWValues" target="_blank" rel="noopener">hhwvalues</a><br>
-          a fork of sapplyvalues tailored for the hhw community.</p>
+      <div class="book-card" data-title="a dama do banheiro" data-author="brendon s. santos" data-date="2012-06-21">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1384158451i/13154441.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Days of the Bagnold Summer</em></h3>
+          <p class="author">by Joff Winterhart</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> June 2012</p>
+            <p><strong>Publisher:</strong> Jonathan Cape</p>
+            <p><a href="https://www.amazon.com/Days-Bagnold-Summer-Joff-Winterhart/dp/0224090844" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
 
-        <p><a href="https://github.com/StrawberryMaster/cyclone-sim" target="_blank" rel="noopener">cyclone
-            simulator</a><br>
-          a fork of monsoonjr99's cyclone simulator. it works, though.</p>
+      <div class="book-card" data-title="father and son: a study of two temperaments" data-author="edmund gosse"
+        data-date="1982-08-01">
+        <img
+          src="https://cdn11.bigcommerce.com/s-vrffsdcwm/images/stencil/1280x1280/products/197899/218245/Image_349__83659.1724443209.jpg?c=2"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Father and Son</em></h3>
+          <p class="author">by Edmund Gosse</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Aug 1982</p>
+            <p><strong>Publisher:</strong> Penguin</p>
+            <p><a href="https://www.amazon.com/Father-Oxford-Worlds-Classics-2009-10-04/dp/B01FIXC5L0" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
 
-        <p><a href="https://github.com/StrawberryMaster/experiments" target="_blank" rel="noopener">experiments</a><br>
-          sometimes i dump code fragments here and see what sticks. my wallet's down there, too!</p>
-      </section>
-    </main>
+      <div class="book-card" data-title="framing public life" data-author="stephen d. reese" data-date="2001-06-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1348993925i/213962.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Framing Public Life</em></h3>
+          <p class="author">by Stephen D. Reese, Oscar H. Gandy Jr., and August E. Grant</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Jun 2001</p>
+            <p><strong>Publisher:</strong> Lawrence Erlbaum Associates</p>
+            <p><a
+                href="https://www.routledge.com/Framing-Public-Life-Perspectives-on-Media-and-Our-Understanding-of-the/Reese-Gandy-Grant/p/book/9780805836530"
+                target="_blank" rel="noopener noreferrer">Find on Routledge</a></p>
+          </div>
+        </div>
+      </div>
 
-    <footer class="footer">
-      <hr>
-      <p>"we had finished dinner. we're now having dessert. and we had the most beautiful piece of chocolate cake that
-        you've ever seen [...]"</p>
-    </footer>
-  </div>
+      <div class="book-card" data-title="going postal: rage, murder, and rebellion" data-author="mark ames"
+        data-date="2005-11-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386913781i/64821.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Going Postal</em></h3>
+          <p class="author">by Mark Ames</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Nov 2005</p>
+            <p><strong>Publisher:</strong> Catapult</p>
+            <p><a href="https://www.amazon.com/Going-Postal-Rebellion-Workplaces-Columbine/dp/1932360824"
+                target="_blank" rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="i promise to be good" data-author="arthur rimbaud" data-date="2007-12-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1320543031i/128458.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>I Promise to Be Good</em></h3>
+          <p class="author">by Arthur Rimbaud (ed. Wyatt Mason)</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Dec 2007</p>
+            <p><strong>Publisher:</strong> Random House</p>
+            <p><a href="https://www.amazon.com/Promise-Be-Good-Letters-Classics/dp/0812970152" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="jennifer government" data-author="max barry" data-date="2004-01-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1632873651i/33356.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Jennifer Government</em></h3>
+          <p class="author">by Max Barry</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Jan 2004</p>
+            <p><strong>Publisher:</strong> Vintage</p>
+            <p><a href="https://www.amazon.com/Jennifer-Government-Max-Barry/dp/1400030927" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="late victorian holocausts" data-author="mike davis" data-date="2001-01-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1680399025i/7859.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Late Victorian Holocausts</em></h3>
+          <p class="author">by Mike Davis</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Jan 2001</p>
+            <p><strong>Publisher:</strong> Verso</p>
+            <p><a href="https://www.amazon.com/Late-Victorian-Holocausts-Famines-Making/dp/1859847390" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="new millennium boyz" data-author="alex kazemi" data-date="2023-06-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1676222039i/112081646.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>New Millennium Boyz</em></h3>
+          <p class="author">by Alex Kazemi</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Jun 2023</p>
+            <p><strong>Publisher:</strong> Simon &amp; Schuster</p>
+            <p><a href="https://www.simonandschuster.com/books/New-Millennium-Boyz/Alex-Kazemi/9781637583920"
+                target="_blank" rel="noopener noreferrer">Find on S&amp;S</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="on cukor" data-author="gavin lambert" data-date="2000-10-01">
+        <img
+          src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1312063693i/1010842.jpg"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>On Cukor</em></h3>
+          <p class="author">by Gavin Lambert (ed. Robert Tratchenberg)</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Oct 2000</p>
+            <p><strong>Publisher:</strong> Rizzoli</p>
+            <p><a href="https://www.amazon.com/Cukor-Gavin-Lambert/dp/0847822974" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="society of the spectacle" data-author="guy debord" data-date="2002-11-01">
+        <img src="https://m.media-amazon.com/images/I/91ey3YQlqLL._UF1000,1000_QL80_.jpg" alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Society of the Spectacle</em></h3>
+          <p class="author">by Guy Debord (trans. Kenn Knabb)</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Nov 2002</p>
+            <p><strong>Publisher:</strong> Hobgoblin Press</p>
+            <p><a href="https://www.amazon.com/Society-Spectacle-Guy-Debord/dp/1922491284" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="the growing inaccessibility of science" data-author="donald p. hayes"
+        data-date="1992-04-01">
+        <img src="https://placehold.co/300x450/590505/fed678?text=The+growing+inaccessibility+of+science"
+          alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>The Growing Inaccessibility of Science</em></h3>
+          <p class="author">by Donald P. Hayes</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Apr 1992</p>
+            <p><strong>Publisher:</strong> Nature</p>
+            <p><a href="https://www.nature.com/articles/356739a0" target="_blank" rel="noopener noreferrer">Find on
+                Nature</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="the porcupine" data-author="julian barnes" data-date="1992-11-01">
+        <img src="https://m.media-amazon.com/images/I/614WJHxmJ2L._UF1000,1000_QL80_.jpg" alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>The Porcupine</em></h3>
+          <p class="author">by Julian Barnes</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Nov 1992</p>
+            <p><strong>Publisher:</strong> Vintage</p>
+            <p><a href="https://www.amazon.com/Porcupine-Julian-Barnes/dp/0679744827" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="book-card" data-title="who killed my father" data-author="édouard louis" data-date="2019-03-01">
+        <img src="https://m.media-amazon.com/images/I/61DB5KzbLjL._UF1000,1000_QL80_.jpg" alt="Book cover placeholder">
+        <div class="book-card-info">
+          <h3><em>Who Killed My Father</em></h3>
+          <p class="author">by Édouard Louis</p>
+          <div class="book-card-details">
+            <p><strong>Published:</strong> Mar 2019</p>
+            <p><strong>Publisher:</strong> New Directions</p>
+            <p><a href="https://www.amazon.com/Who-Killed-Father-Edouard-Louis/dp/0811235041" target="_blank"
+                rel="noopener noreferrer">Find on Amazon</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <p>This is still a work in progress. I might finish this someday. Maybe.</p>
+  </main>
+
+  <footer id="quote-footer">
+    <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+      <img alt="Creative Commons License" src="buttons/cc-by-sa.png" width="88" height="31"></a>
+    <img alt="papel" src="buttons/papel.png" width="88" height="31">
+    <img alt="calmspace" src="buttons/calmspace.png" width="88" height="31">
+    <img alt="kris where tf are we" src="buttons/kris.png" width="88" height="31">
+    <img alt="you’re telling me a queer coded this" src="buttons/queercode.png" width="88" height="31">
+    <a target="_blank" href="https://homestuck.giovanh.com/unofficial-homestuck-collection/">
+      <img alt="download sburb!" src="buttons/sburb.png" width="88" height="31"></a>
+    <a target="_blank" href="https://lucida.to/">
+      <img alt="lucida" src="buttons/lucida.gif" width="88" height="31"></a>
+    <br />
+
+    <div id="footer-links">
+      <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
+      <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
+      <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
+      <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
+    </div>
+
+    <p id="actual-quote"></p>
+    <p id="quote-author"></p>
+  </footer>
 </body>
 
 </html>

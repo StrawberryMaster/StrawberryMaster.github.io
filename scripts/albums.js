@@ -62,12 +62,39 @@ const albumData = [
   
   { artist: "Robin Thicke", title: "The Evolution of Robin Thicke", cover: "https://lh3.googleusercontent.com/ObMhkZ6O7VFf0VKIpykMqPRFZnZAsu20cMU3kGU9xS7hMJL8mdoNhNxU9HScero3OB9AmbournejXp1b=w544-h544-s-l90-rj" },
   { artist: "D’Angelo", title: "Brown Sugar", cover: "https://lh3.googleusercontent.com/M9qf-OjW35BAr3nIVg3cZEYAiff45G6TYII-8HxI9u4aj5JMLFarvglBTfnArYunEKIiIhiUweoKAci-=w544-h544-l90-rj" },
+  { artist: "The Beatles", title: "Let It Be… Naked", cover: "https://resources.tidal.com/images/dac3cee7/d258/4468/9274/1eae507b0738/1280x1280.jpg" },
+  { artist: "Pet Shop Boys", title: "Actually", cover: "https://resources.tidal.com/images/f42ebf37/b664/4c77/af7e/f4792fad4f2f/1280x1280.jpg" },
+  { artist: "Kraftwerk", title: "Tour de France", cover: "https://resources.tidal.com/images/65aed63c/bda1/420e/afd8/8c36157b1f61/1280x1280.jpg" },
+  
+  { artist: "Michael Jackson", title: "Thriller", cover: "https://resources.tidal.com/images/6cecc1ea/421c/4535/bafa/f6d56cbfc756/320x320.jpg" },
+  { artist: "Janet Jackson", title: "Damita Jo", cover: "https://resources.tidal.com/images/75343062/c435/41b9/9b42/11b44d9b1523/320x320.jpg" }, 
+  { artist: "George Michael", title: "Patience", cover: "https://yt3.googleusercontent.com/f_iGMwB81onSpcW23-GEYoiyv_nfae3md_V4cKFJ5uOv4ws-8YJmWAGgOWmD5Pe00qpaql_jWT1W5nvh=w544-h544-l90-rj" },
+  { artist: "Tina Turner", title: "In Your Wildest Dreams", cover: "https://yt3.googleusercontent.com/f_iGMwB81onSpcW23-GEYoiyv_nfae3md_V4cKFJ5uOv4ws-8YJmWAGgOWmD5Pe00qpaql_jWT1W5nvh=w544-h544-l90-rj" },
+  { artist: "a-ha", title: "Hunting High and Low", cover: "https://yt3.googleusercontent.com/Hl4_H5E5uxO1esv1hHPd9Y8Nbui-J0356F41rkK5rXTEty0zCfxjPa_yHKp24xcZDQInH28FiZM1HCpI=w544-h544-l90-rj" },
+  
+  { artist: "Alphaville", title: "The Breathtaking Blue", cover: "https://yt3.googleusercontent.com/gpJ3hEV2iZMHusRAsRUijML2NIiGt5Vl8Tt1cCjeR6JScXY8DNlh-XqikZz8mzNHxkom1Xup4uOYlpFK=w544-h544-l90-rj" },
+  { artist: "Anelis Assumpção", title: "Sou Suspeita Estou Sujeita Não Sou Santa", cover: "https://yt3.googleusercontent.com/CkPzom7X_YubtaSd74vJ8MBlFkl4obNJ0Gpr1zhNckXuqoZpIAGHLomVaNIBANp-etyxihVNgGiacKY_=w544-h544-l90-rj" },
+  { artist: "Blur", title: "Leisure", cover: "https://yt3.googleusercontent.com/Ed-WeXINrTJwmYJudzSf31HfuCcvO3l2ug9JcTW-Z5Z6ruNJWQUPjskut_imGKp71vc46rYZT8SC75Bs=w544-h544-l90-rj" },
+  { artist: "Moloko", title: "Things to Make and Do", cover: "https://lh3.googleusercontent.com/tFYEqBdjg2fFhX2rVf0SmkS0vhjvHi7Yf7S8iNWCQfkBeaKa-FbBrPEDP8ifE2UrqHcuScTst4hqNIKS=w544-h544-l90-rj" },
+  { artist: "Bobby Brown", title: "Bobby", cover: "https://yt3.googleusercontent.com/g5y34IApPFYmAeMnz6H0EQ-0Ch5ebRq0eYs9X8qfVuvkKRWamg2bUVDhCtOwA4GITjTpET7b_m1bkA5QTA=w544-h544-l90-rj" },
+  
+  { artist: "Sananda Maitreya", title: "Sananda Maitreya’s Symphony Or Damn", cover: "https://yt3.googleusercontent.com/mdtHglNU0VP1Hdjn-uJA19jN_UNtgPiHR3OH_yCr28DOb1HGjyisPJjde3zzlzwAygLD1BObpJKnIw4X=w544-h544-l90-rj" },
+  { artist: "Deacon Blue", title: "Walking Back Home", cover: "https://yt3.googleusercontent.com/qnZP5X3MvEbtLeRbwI8XE2SLXTUWgOKSQELkuLxWpjLjdgmPnqhOJwAfUPf97Yzp_6HUKBWwU5RRhJx8=w544-h544-l90-rj" },
+  { artist: "Weezer", title: "Maladroit", cover: "https://yt3.googleusercontent.com/k4nOOBSgcSfOm4z8tXvsXtdv1A2srufsx24kM8k_K6Nh2-rjV-zawEjEj91GB3KGr9Z5kWcn-ouTJWE=w544-h544-l90-rj" },
+  { artist: "Lorde", title: "Pure Heroine", cover: "https://substackcdn.com/image/fetch/$s_!aFyo!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe926c826-b7af-4003-a934-dea77cb2f734_640x640.jpeg" },
+  { artist: "Britney Spears", title: "Glory", cover: "https://yt3.googleusercontent.com/0iDiPGe-km5Y6p1iQG8exq7r8qkdU8rLnLxfrKBTZpec5CT1WZVWsgiepFQCk0TWT_HQtFEqrzN2gdz7Zw=w544-h544-l90-rj" },
+  
+  { artist: "Sia", title: "Some People Have Real Problems", cover: "https://yt3.googleusercontent.com/GpJWcKyTRSOYeH6sQe6MtmFPyhO4UJ0ZWSZOKOTica4nyh-zfDgQJVDm79y348VqgZOpzpSyHD1ujFQK=w544-h544-s-l90-rj" },
+  { artist: "Pullovers", title: "Tudo Que Eu Sempre Sonhei", cover: "https://yt3.googleusercontent.com/l0jK1EpMDFIm-HKgZ7DP5UQ_Rw24mg2iuOyyAc5_3Od1a-BHsBkl93QzX8PIkSXrrpsjDGp6dY-qzH0=w544-h544-l90-rj" },
+  { artist: "Antropoceno", title: "No Ritmo da Terra", cover: "https://lh3.googleusercontent.com/2rE00E57bpYBqFO2fQZWVk2kvTg0M4GXZEPZ3a5qKRw8AGDbcst6-SVELrpGH9rcsMdCsiNvOoAxamD-yQ=w544-h544-l90-rj" },
+  { artist: "Marisa Monte", title: "Infinito Particular", cover: "https://yt3.googleusercontent.com/c_SVOJDCPh682P5651zr4SMfRQTAbRrm1_zmdXygpiJMSQ34YqP1KoF-pcJ79qNUA_8TCX1Oo__7CKjkmw=w544-h544-l90-rj" },
+  { artist: "Eva Cassidy", title: "Simply Eva", cover: "https://yt3.googleusercontent.com/I1NHFSWk8hyWuaFI7k1APq5njwRQeRy8R9qPVlrZwM1N6CvO32uUffrUm676x6hT23GqYpZxqcRS7QT1TQ=w544-h544-l90-rj" },
   
 ];
 
+let reserveAlbums = [];
 const gridContainer = document.getElementById('album-grid');
 
-// helper function to shuffle an array
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -76,34 +103,122 @@ function shuffleArray(array) {
   return array;
 }
 
-// render the HTML
-function renderAlbums(list) {
+function init() {
+  const shuffled = shuffleArray([...albumData]);
+  const activeAlbums = shuffled.slice(0, 25);
+  reserveAlbums = shuffled.slice(25);
+
   gridContainer.innerHTML = '';
-  
-  list.forEach(album => {
-    const card = document.createElement('figure');
-    card.className = 'album-card';
-    
-    card.innerHTML = `
-      <img src="${album.cover}" alt="${album.title}" loading="lazy">
-      <div class="album-info">
-        <span class="album-artist">${album.artist}</span> 
-        <span class="album-title">${album.title}</span>
-      </div>
-    `;
-    gridContainer.appendChild(card);
+  activeAlbums.forEach(album => {
+    gridContainer.appendChild(createAlbumCard(album));
   });
 }
 
-// shuffle and show first 25
-function init() {
-  const shuffled = shuffleArray([...albumData]); // create a copy so we don't mess up original order
-  const selection = shuffled.slice(0, 25); // take top 25
-  renderAlbums(selection);
+function createAlbumCard(album) {
+  const card = document.createElement('figure');
+  card.className = 'album-card';
+  card.setAttribute('draggable', true);
+  
+  card.albumData = album; 
+
+  card.innerHTML = `
+    <div class="album-inner">
+      <div class="album-front">
+        <img src="${album.cover}" alt="${album.title}" loading="lazy" draggable="false">
+      </div>
+      <div class="album-back">
+        <span class="album-artist">${album.artist}</span> 
+        <hr style="width: 50%; border-color: rgba(255,255,255,0.3); margin: 0.5rem auto;">
+        <span class="album-title"><em>${album.title}</em></span>
+      </div>
+    </div>
+  `;
+
+  card.addEventListener('dragstart', handleDragStart);
+  card.addEventListener('dragover', handleDragOver);
+  card.addEventListener('dragenter', handleDragEnter);
+  card.addEventListener('dragleave', handleDragLeave);
+  card.addEventListener('drop', handleDrop);
+  card.addEventListener('dragend', handleDragEnd);
+
+  card.addEventListener('dblclick', function() {
+    swapAlbum(this);
+  });
+
+  return card;
 }
 
-init();
+// double-click swap
+function swapAlbum(cardElement) {
+  if (reserveAlbums.length === 0) return;
 
-function shuffleAlbums() {
-    init();
+  // pick a random album from the reserve pool
+  const randomIndex = Math.floor(Math.random() * reserveAlbums.length);
+  const newAlbum = reserveAlbums[randomIndex];
+  
+  // take the old album from this card
+  const oldAlbum = cardElement.albumData;
+
+  // trade them!
+  reserveAlbums[randomIndex] = oldAlbum;
+  cardElement.albumData = newAlbum;
+
+  // update the card
+  cardElement.classList.add('swapping');
+
+  setTimeout(() => {
+    const img = cardElement.querySelector('img');
+    const artist = cardElement.querySelector('.album-artist');
+    const title = cardElement.querySelector('.album-title');
+
+    img.src = newAlbum.cover;
+    img.alt = newAlbum.title;
+    artist.textContent = newAlbum.artist;
+    title.innerHTML = `<em>${newAlbum.title}</em>`;
+
+    cardElement.classList.remove('swapping');
+  }, 300);
 }
+
+// drag and drop
+let draggedItem = null;
+
+function handleDragStart(e) {
+  draggedItem = this;
+  setTimeout(() => this.classList.add('dragging'), 0);
+}
+
+function handleDragOver(e) {
+  e.preventDefault(); 
+}
+
+function handleDragEnter(e) {
+  e.preventDefault();
+  this.classList.add('drag-over');
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  this.classList.remove('drag-over');
+  if (this !== draggedItem) {
+    const allCards = [...gridContainer.querySelectorAll('.album-card')];
+    const draggedIndex = allCards.indexOf(draggedItem);
+    const droppedIndex = allCards.indexOf(this);
+    
+    if (draggedIndex < droppedIndex) {
+      this.parentNode.insertBefore(draggedItem, this.nextSibling);
+    } else {
+      this.parentNode.insertBefore(draggedItem, this);
+    }
+  }
+}
+
+function handleDragEnd(e) {
+  this.classList.remove('dragging');
+  gridContainer.querySelectorAll('.album-card').forEach(c => c.classList.remove('drag-over'));
+}
+
+document.addEventListener('DOMContentLoaded', init);

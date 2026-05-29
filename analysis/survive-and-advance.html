@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survive and Advance</title>
+    <meta name="description" content="A re-creation of the original American History USA game">
+    <meta name="theme-color" content="#00b6d5">
+    <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+    <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="icon" type="image/x-icon" href="../files/wizardry.ico">
+    <script src="../scripts/quotes.js"></script>
+    <style>
+        :root {
+            --cell-size: 80px;
+        }
+
+        #game-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+            overflow-x: auto;
+        }
+
+        #game-wrapper header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        #game-wrapper header p {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        .recreation-note {
+            margin: 1em auto 0;
+            padding: 0 1rem;
+            max-width: 980px;
+            text-align: center;
+        }
+
+        #game-wrapper .game-header-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        #game-wrapper .game-header-main {
+            max-width: 700px;
+            text-align: center;
+        }
+
+        #game-wrapper .game-header-main h1 {
+            margin: 0 0 0.45rem;
+        }
+
+        #game-wrapper .game-header-main p {
+            margin: 0;
+            max-width: none;
+        }
+
+        #game-wrapper .game-header-controls {
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            align-items: center;
+        }
+
+        #game-wrapper .game-header-controls .mode-controls,
+        #game-wrapper .game-header-controls .ai-controls {
+            margin: 0;
+        }
+
+        #main-layout-table {
+            width: 100%;
+            border-spacing: 1rem;
+        }
+
+        #main-layout-table>tbody>tr>td {
+            vertical-align: top;
+            background: rgba(0, 0, 0, 0.2);
+            border: .1rem solid var(--accent-color);
+            border-radius: .2rem;
+            padding: 1rem;
+        }
+
+        #left-column,
+        #right-column {
+            width: 220px;
+        }
+
+        .panel-subtitle {
+            margin-top: 0;
+            margin-bottom: 1em;
+            font-style: italic;
+            opacity: 0.9;
+        }
+
+        .player-list-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .player-list-table td {
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 60%);
+            padding: 4px;
+        }
+
+        .player-list-table .player-name-cell {
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 90%;
+        }
+
+        .player-list-table .player-color-cell {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        #center-column {
+            text-align: center;
+        }
+
+        #you-info {
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
+
+        #you-info-swatch {
+            display: inline-block;
+            width: 1.2em;
+            height: 1.2em;
+            vertical-align: middle;
+            margin: 0 5px;
+            border: 1px solid var(--text-color);
+        }
+
+        #game-grid {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+
+        #game-grid td {
+            width: var(--cell-size);
+            height: var(--cell-size);
+            border: 3px solid var(--secondary-bg);
+            outline: 1px solid color-mix(in srgb, var(--accent-color), transparent 50%);
+            cursor: pointer;
+        }
+
+        #game-grid td:not(.player-cell) {
+            background-color: rgba(0, 0, 0, 0.1) !important;
+            cursor: default;
+        }
+
+        #game-grid td.player-cell[data-id="0"] {
+            outline: 3px solid var(--text-color);
+            outline-offset: -3px;
+            box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.7);
+            position: relative;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        #game-grid td.selected-cell {
+            outline: 4px solid var(--hover-color);
+            outline-offset: -4px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 10;
+        }
+
+        #right-column ul {
+            padding-left: 20px;
+        }
+
+        #right-column li {
+            padding-bottom: 10px;
+        }
+
+        #right-column .swatch-list {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 15px 0;
+            display: flex;
+            gap: 5px;
+        }
+
+        #right-column .color-swatch {
+            width: 1.6em;
+            height: 1.6em;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .vote-button,
+        .try-again-button,
+        .watch-round-button {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 1rem;
+            cursor: pointer;
+            background: var(--secondary-bg);
+            border: .1rem solid var(--accent-color);
+            border-radius: .2rem;
+            color: var(--text-color);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .vote-button:hover,
+        .try-again-button:hover,
+        .watch-round-button:hover {
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        .mode-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 0.4rem;
+        }
+
+        .mode-button {
+            display: inline-block;
+            width: auto;
+            margin: 0;
+            padding: 0.2rem 0.55rem;
+            font-size: 0.85rem;
+            font-family: inherit;
+            font-weight: normal;
+            cursor: pointer;
+            background: color-mix(in srgb, var(--secondary-bg), transparent 20%);
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 35%);
+            border-radius: .2rem;
+            color: var(--text-color);
+            opacity: 0.85;
+            transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+        }
+
+        .mode-button:hover {
+            opacity: 1;
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        .ai-controls {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: .4rem auto auto .5rem;
+        }
+
+        .ai-style-button {
+            display: inline-block;
+            width: auto;
+            margin: 0;
+            padding: 0.2rem 0.55rem;
+            font-size: 0.85rem;
+            font-family: inherit;
+            font-weight: normal;
+            cursor: pointer;
+            background: color-mix(in srgb, var(--secondary-bg), transparent 20%);
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 35%);
+            border-radius: .2rem;
+            color: var(--text-color);
+            opacity: 0.85;
+            transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+        }
+
+        .ai-style-button:hover {
+            opacity: 1;
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        .mode-button.is-active,
+        .ai-style-button.is-active {
+            opacity: 1;
+            border-color: var(--hover-color);
+        }
+
+        #bottom-panel {
+            text-align: center;
+        }
+
+        #bottom-panel ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5em;
+            justify-content: center;
+        }
+
+        .vote-tally-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        .vote-tally-item .voter-swatches {
+            display: flex;
+        }
+
+        .vote-tally-item .voter-swatches .color-swatch {
+            width: 1.2em;
+            height: 1.2em;
+            margin-right: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .voting-chart-wrapper {
+            margin-top: 1.5em;
+            overflow-x: auto;
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 35%);
+            border-radius: .2rem;
+            background: rgba(0, 0, 0, 0.15);
+            padding: .75rem;
+        }
+
+        .voting-chart-table {
+            border-collapse: collapse;
+            width: max-content;
+            min-width: 100%;
+            font-size: .9rem;
+        }
+
+        .voting-chart-table th,
+        .voting-chart-table td {
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 45%);
+            padding: .35rem .5rem;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .voting-chart-table th {
+            background: color-mix(in srgb, var(--secondary-bg), transparent 10%);
+        }
+
+        .voting-chart-player {
+            text-align: left !important;
+            font-weight: bold;
+        }
+
+        .chart-vote-hit {
+            background: rgba(84, 212, 84, 0.25);
+        }
+
+        .chart-vote-self {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .chart-out {
+            opacity: .5;
+            background: rgba(255, 120, 120, 0.22);
+        }
+
+        .chart-winner {
+            background: rgba(84, 212, 84, 0.35);
+            font-weight: bold;
+        }
+
+        .chart-runner-up {
+            background: rgba(255, 209, 102, 0.32);
+            font-weight: bold;
+        }
+
+        @media (min-width: 900px) {
+            #game-wrapper .game-header-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) 320px;
+                align-items: start;
+                gap: 1rem;
+                text-align: left;
+            }
+
+            #game-wrapper .game-header-main {
+                max-width: none;
+            }
+            
+            #game-wrapper .game-header-controls {
+                max-width: 320px;
+                align-items: center;
+                text-align: center;
+            }
+
+            #game-wrapper .game-header-controls .mode-controls,
+            #game-wrapper .game-header-controls .ai-controls {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            #main-layout-table,
+            #main-layout-table>tbody>tr,
+            #main-layout-table>tbody>tr>td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            #left-column,
+            #right-column {
+                width: auto;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="survive-page">
+    <header id="construction-bar">Under construction</header>
+    <header id="header-area">
+        <header id="header-image"></header>
+        <nav id="navbar">
+            <ul>
+                <li><a href="../">Home</a></li>
+                <li><a href="../teahouse">Teahouse</a></li>
+                <li><a href="../collections">Collections</a></li>
+                <li><a href="../analysis"><u>Analysis</u></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-container">
+        <p class="recreation-note">This is a recreation of the original Survive and Advance
+            game, hosted on American History USA (home of its more famous brother, The Campaign Trail), which can be
+            found <a href="https://americanhistoryusa.com/survive-advance/" target="_blank">here</a> (<a
+                href="https://web.archive.org/web/*/https://americanhistoryusa.com/survive-advance/" target="_blank">see
+                archive</a>).</p>
+        <hr />
+        <div id="game-wrapper"></div>
+    </main>
+
+    <footer id="quote-footer">
+        <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License" src="../buttons/cc-by-sa.png" width="88" height="31">
+        </a>
+        <img alt="calmspace" src="../buttons/calmspace.png" width="88" height="31">
+        <img alt="kris where tf are we" src="../buttons/kris.png" width="88" height="31">
+        <img alt="you're telling me a queer coded this" src="../buttons/queercode.png" width="88" height="31">
+        <a target="_blank" href="https://homestuck.giovanh.com/unofficial-homestuck-collection/">
+            <img alt="download sburb!" src="../buttons/sburb.png" width="88" height="31">
+        </a>
+        <a target="_blank" href="https://lucida.to/">
+            <img alt="lucida" src="../buttons/lucida.gif" width="88" height="31">
+        </a><br />
+
+        <div id="footer-links">
+            <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
+            <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
+            <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
+            <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
+        </div>
+
+        <p id="actual-quote"></p>
+        <p id="quote-author"></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const gameContainer = document.getElementById('game-wrapper');
+            let state = {};
+
+            const CELL_SIZE = 80;
+            const PLAYER_ID = 0;
+            const SIMILAR_COUNT = 5;
+            const GAME_MODES = {
+                16: { gridSize: 4, label: '16 Players' },
+                25: { gridSize: 5, label: '25 Players' },
+            };
+            const AI_STYLES = {
+                classic: { label: 'Classic' },
+                alliances: { label: 'Alliances' },
+                reality: { label: 'Reality TV' },
+            };
+            let currentMode = 16;
+            let gridSize = GAME_MODES[currentMode].gridSize;
+            let numPlayers = currentMode;
+            let currentAiStyle = 'classic';
+
+            const NAMES = [
+                'Aaron', 'Acheson', 'Adams', 'Addams', 'Albright', 'Aldrin', 'Alito', 'Angelou', 'Anthony', 'Armstrong', 'Arthur', 'Astaire', 'Attucks', 'Austin', 'Bacall',
+                'Bacon', 'Baltimore', 'Banneker', 'Barton', 'Basquiat', 'Beecher', 'Bellows', 'Berkeley', 'Berlin', 'Bernanke', 'Bernays', 'Biddle', 'Bingham', 'Bird', 'Black',
+                'Blackwell', 'Bogart', 'Booker', 'Boone', 'Bradley', 'Bradstreet', 'Bradwell', 'Brandeis', 'Brando', 'Brown', 'Bryan', 'Buchanan', 'Buck', 'Burnside', 'Burr',
+                'Bush', 'Butler', 'Cadillac', 'Cagney', 'Calhoun', 'Capone', 'Carnegie', 'Carson', 'Carter', 'Carver', 'Cass', 'Cassatt', 'Chaplin', 'Chisholm', 'Clark',
+                'Clay', 'Clayton', 'Cleveland', 'Clinton', 'Cobb', 'Columbus', 'Coolidge', 'Cooper', 'Coronado', 'Coughlin', 'Coxey', 'Crawford', 'Crazy Horse', 'Crockett', 'Custer',
+                'Daley', 'Darrow', 'Davis', 'Dawes', 'de Soto', 'Dean', 'Debs', 'Dewey', 'Dietrich', 'Dillinger', 'Dix', 'Dole', 'Douglas', 'Douglass', 'Dred Scott',
+                'Drew', 'DuBois', 'Dukakis', 'Dulles', 'Earhart', 'Eccles', 'Edison', 'Edwards', 'Eisenhower', 'Ellington', 'Emerson', 'Erikson', 'Estevanico', 'Fall', 'Fillmore',
+                'Fitzgerald', 'Flagler', 'Fonda', 'Ford', 'Fortas', 'Forten', 'Franklin', 'Freeman', 'Friedan', 'Fulton', 'Gable', 'Garfield', 'Garland', 'Garrison', 'Gates',
+                'Gaye', 'Geronimo', 'Gershwin', 'Gideon', 'Ginsburg', 'Goldman', 'Goldwater', 'Gompers', 'Gore', 'Graham', 'Grant', 'Greeley', 'Greenspan', 'Grimke', 'Grinstead',
+                'Hale', 'Hamilton', 'Hancock', 'Harding', 'Harrison', 'Hawley', 'Hayes', 'Hearst', 'Hemings', 'Hemingway', 'Henry', 'Hepburn', 'Hiss', 'Hoffman', 'Holiday',
+                'Hoover', 'Hopper', 'Houston', 'Hughes', 'Humphrey', 'Hurston', 'Hutchinson', 'Ickes', 'Ida Wells', 'Jackson', 'James', 'Jay', 'Jefferson', 'Jobs', 'Johnson',
+                'Joplin', 'Jordan', 'Joseph', 'Katz', 'Keaton', 'Kellogg', 'Kelly', 'Kennan', 'Kennedy', 'Kerry', 'Kesey', 'Key', 'King', 'La Guardia', 'LaFollette',
+                'Lee', 'Levitt', 'Lewis', 'Lincoln', 'Lindbergh', 'Lochner', 'Long', 'Lyon', 'MacArthur', 'Madison', 'Madonna', 'Mahan', 'Malcolm', 'Mann', 'Marbury',
+                'Marquette', 'Marshall', 'Martin', 'McCain', 'McCarthy', 'McClellan', 'McCorvey', 'McCulloch', 'McKinley', 'McPherson', 'Mead', 'Melville', 'Metacomet', 'Miranda', 'Mitchell',
+                'Mondale', 'Monroe', 'Morgan', 'Morrill', 'Morrison', 'Morse', 'Mott', 'Murray', 'Narvaez', 'Nat Turner', 'Newton', 'Nimitz', 'Nixon', 'Nye', 'O\'Connor',
+                'Obama', 'Oppenheimer', 'Paine', 'Palin', 'Palmer', 'Parks', 'Peale', 'Peck', 'Penn', 'Perkins', 'Pershing', 'Pierce', 'Pinckney', 'Pitt', 'Plessy',
+                'Poe', 'Poitier', 'Pontiac', 'Porter', 'Post', 'Powderly', 'Powell', 'Powhatan', 'Presley', 'Prince Hall', 'Pulitzer', 'Pullman', 'Raleigh', 'Rand', 'Rankin',
+                'Reagan', 'Rehnquist', 'Reno', 'Revels', 'Rice', 'Ride', 'Riis', 'Robinson', 'Rockefeller', 'Rodham', 'Roe', 'Rogers', 'Rolfe', 'Romney', 'Roosevelt',
+                'Rosie', 'Rudolph', 'Ruth', 'Sacagawea', 'Sacco', 'Sanger', 'Scopes', 'Scott', 'Seattle', 'Sequoyah', 'Sevier', 'Seymour', 'Shays', 'Sherman', 'Shlafly',
+                'Sinclair', 'Slick', 'Smith', 'Smoot', 'Sotomayor', 'Sousa', 'Squanto', 'Stanton', 'Stanwyck', 'Stein', 'Steinbeck', 'Steinem', 'Stevenson', 'Stewart', 'Stokes',
+                'Stono', 'Stowe', 'Stowers', 'Streep', 'Stuyvesant', 'Sumner', 'Taft', 'Taney', 'Tarbell', 'Taylor', 'Tecumseh', 'Temple', 'Tenskwatawa', 'Thomas', 'Thurmond',
+                'Tilden', 'Townsend', 'Tracy', 'Truman', 'Truth', 'Tubman', 'Twain', 'Tweed', 'Tyler', 'Van Buren', 'Vanzetti', 'Vesey', 'Volcker', 'Vonnegut', 'Walker',
+                'Wallace', 'Warren', 'Washington', 'Wayne', 'Weaver', 'Welles', 'Wharton', 'Wheatley', 'White', 'Whitefield', 'Whitman', 'Whitney', 'Willard', 'Williams', 'Wilmot',
+                'Wilson', 'Winfrey', 'Winthrop', 'Wood', 'Woodhull', 'Wright', 'Yellen', 'YickWo', 'Zenger',
+            ];
+
+            function updateCellSize() {
+                const wrapper = document.getElementById('game-wrapper');
+                if (!wrapper) return;
+                const style = getComputedStyle(wrapper);
+                const paddingLeft = parseFloat(style.paddingLeft) || 0;
+                const paddingRight = parseFloat(style.paddingRight) || 0;
+                const available = wrapper.clientWidth - paddingLeft - paddingRight;
+                const per = Math.floor(available / gridSize) - 4;
+                const size = Math.max(30, Math.min(CELL_SIZE, per));
+                document.documentElement.style.setProperty('--cell-size', size + 'px');
+            }
+
+            const shuffleArray = (array) => {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            };
+
+            const getRandomColor = () => ({
+                r: Math.floor(Math.random() * 256),
+                g: Math.floor(Math.random() * 256),
+                b: Math.floor(Math.random() * 256)
+            });
+
+            const colorToRgb = (color) => `rgb(${color.r}, ${color.g}, ${color.b})`;
+
+            const colorDistance = (c1, c2) => Math.sqrt(Math.pow(c1.r - c2.r, 2) + Math.pow(c1.g - c2.g, 2) + Math.pow(c1.b - c2.b, 2));
+
+            function assignAlliances() {
+                const ids = shuffleArray(state.players.map(player => player.id));
+                ids.forEach(id => {
+                    state.players[id].allianceId = null;
+                });
+
+                let nextAllianceId = 1;
+                let cursor = 0;
+                while (cursor < ids.length) {
+                    const remaining = ids.length - cursor;
+                    if (remaining < 2) break;
+
+                    let size = Math.random() < 0.6 ? 2 : 3;
+                    if (remaining === 3) size = 3;
+                    if (remaining === 2) size = 2;
+                    if (remaining > 3 && Math.random() < 0.2) {
+                        cursor += 1;
+                        continue;
+                    }
+
+                    const members = ids.slice(cursor, cursor + size);
+                    members.forEach(id => {
+                        state.players[id].allianceId = nextAllianceId;
+                    });
+
+                    nextAllianceId++;
+                    cursor += size;
+                }
+            }
+
+            function buildAlliancePlans(alivePlayers) {
+                const allianceGroups = {};
+                alivePlayers.forEach(player => {
+                    if (player.allianceId === null) return;
+                    if (!allianceGroups[player.allianceId]) allianceGroups[player.allianceId] = [];
+                    allianceGroups[player.allianceId].push(player);
+                });
+
+                const plans = {};
+                Object.keys(allianceGroups).forEach(key => {
+                    const allianceId = Number(key);
+                    const members = allianceGroups[allianceId];
+                    if (!members || members.length < 2) return;
+
+                    const outsiders = alivePlayers.filter(player => player.allianceId !== allianceId);
+                    if (outsiders.length === 0) return;
+
+                    outsiders.sort((a, b) => {
+                        const aThreat = a.timesVotedForEliminated + (a.isolationScore / 100) + members.reduce((sum, member) => {
+                            return sum + (member.dissimilar.some(p => p.id === a.id) ? 1 : 0);
+                        }, 0);
+                        const bThreat = b.timesVotedForEliminated + (b.isolationScore / 100) + members.reduce((sum, member) => {
+                            return sum + (member.dissimilar.some(p => p.id === b.id) ? 1 : 0);
+                        }, 0);
+                        return bThreat - aThreat;
+                    });
+
+                    plans[allianceId] = outsiders[0].id;
+                });
+
+                return plans;
+            }
+
+            function pickAiTarget(ai, alivePlayers, alliancePlans) {
+                const potentialTargets = alivePlayers.filter(player => player.id !== ai.id);
+                if (potentialTargets.length === 0) return null;
+
+                const dissimilarIds = ai.dissimilar.map(player => player.id);
+                const isolatedPlayers = [...alivePlayers]
+                    .sort((a, b) => b.isolationScore - a.isolationScore)
+                    .slice(0, 3)
+                    .map(player => player.id);
+
+                let targets = [...potentialTargets];
+                const similarityAllies = ai.similar.slice(0, 2).map(player => player.id);
+                const nonSimilarityAllies = targets.filter(player => !similarityAllies.includes(player.id));
+                if (nonSimilarityAllies.length > 0) targets = nonSimilarityAllies;
+
+                if (currentAiStyle === 'alliances' || currentAiStyle === 'reality') {
+                    const allianceTargetId = ai.allianceId !== null ? alliancePlans[ai.allianceId] : null;
+                    if (allianceTargetId !== undefined && allianceTargetId !== null) {
+                        const allianceTarget = targets.find(player => player.id === allianceTargetId);
+                        const followChance = currentAiStyle === 'alliances' ? 0.75 : 0.55;
+                        if (allianceTarget && Math.random() < followChance) {
+                            return allianceTarget;
+                        }
+                    }
+
+                    const outsideAlliance = targets.filter(player => player.allianceId !== ai.allianceId);
+                    if (outsideAlliance.length > 0) targets = outsideAlliance;
+                }
+
+                if (currentAiStyle === 'reality') {
+                    const roundProgress = state.round / Math.max(1, numPlayers - 1);
+                    if (roundProgress < 0.35) {
+                        const isolatedTargets = targets.filter(player => isolatedPlayers.includes(player.id));
+                        if (isolatedTargets.length > 0) return isolatedTargets[Math.floor(Math.random() * isolatedTargets.length)];
+                    }
+
+                    if (roundProgress > 0.6) {
+                        const leaders = [...targets].sort((a, b) => b.timesVotedForEliminated - a.timesVotedForEliminated);
+                        if (leaders.length > 0 && Math.random() < 0.65) return leaders[0];
+                    }
+                }
+
+                let chosenTarget;
+                const rand = Math.random();
+                if (rand < 0.6) {
+                    const dissimilarTargets = targets.filter(player => dissimilarIds.includes(player.id));
+                    if (dissimilarTargets.length > 0) chosenTarget = dissimilarTargets[Math.floor(Math.random() * dissimilarTargets.length)];
+                } else if (rand < 0.8) {
+                    const isolatedTargets = targets.filter(player => isolatedPlayers.includes(player.id));
+                    if (isolatedTargets.length > 0) chosenTarget = isolatedTargets[Math.floor(Math.random() * isolatedTargets.length)];
+                }
+
+                if (!chosenTarget) {
+                    chosenTarget = targets[Math.floor(Math.random() * targets.length)];
+                }
+
+                return chosenTarget || null;
+            }
+
+            function resolveEliminationTie(playersToEliminate) {
+                const tieCandidates = [...playersToEliminate];
+                const tieBreakLog = [];
+
+                const byElimVotes = [...tieCandidates].sort((a, b) => a.timesVotedForEliminated - b.timesVotedForEliminated);
+                if (byElimVotes.length > 1 && byElimVotes[0].timesVotedForEliminated !== byElimVotes[1].timesVotedForEliminated) {
+                    const eliminated = byElimVotes[0];
+                    tieBreakLog.push(`${eliminated.name} ${eliminated.contestantNumber} had fewer successful elimination votes (${eliminated.timesVotedForEliminated}).`);
+                    return { eliminated, tieBreakLog };
+                }
+
+                const minElimVotes = byElimVotes[0].timesVotedForEliminated;
+                let narrowed = tieCandidates.filter(player => player.timesVotedForEliminated === minElimVotes);
+                tieBreakLog.push(`Still tied on successful elimination votes (${minElimVotes}).`);
+
+                const byIsolation = [...narrowed].sort((a, b) => b.isolationScore - a.isolationScore);
+                if (byIsolation.length > 1 && byIsolation[0].isolationScore !== byIsolation[1].isolationScore) {
+                    const eliminated = byIsolation[0];
+                    tieBreakLog.push(`${eliminated.name} ${eliminated.contestantNumber} was more isolated (score ${eliminated.isolationScore.toFixed(2)}).`);
+                    return { eliminated, tieBreakLog };
+                }
+
+                const maxIsolation = byIsolation[0].isolationScore;
+                narrowed = narrowed.filter(player => player.isolationScore === maxIsolation);
+                tieBreakLog.push(`Still tied on isolation score (${maxIsolation.toFixed(2)}).`);
+
+                const byContestantNumber = [...narrowed].sort((a, b) => a.contestantNumber - b.contestantNumber);
+                if (byContestantNumber.length > 1 && byContestantNumber[0].contestantNumber !== byContestantNumber[1].contestantNumber) {
+                    const eliminated = byContestantNumber[0];
+                    tieBreakLog.push(`${eliminated.name} ${eliminated.contestantNumber} had the lower contestant number.`);
+                    return { eliminated, tieBreakLog };
+                }
+
+                const eliminated = [...narrowed].sort((a, b) => a.id - b.id)[0];
+                tieBreakLog.push(`Final deterministic fallback used player id order.`);
+                return { eliminated, tieBreakLog };
+            }
+
+            function initGame(mode = currentMode) {
+                currentMode = GAME_MODES[mode] ? mode : 16;
+                gridSize = GAME_MODES[currentMode].gridSize;
+                numPlayers = currentMode;
+
+                state = {
+                    players: [],
+                    round: 1,
+                    selectedOpponentId: null,
+                    lastRoundResults: null,
+                    voteHistory: [],
+                    status: 'playing',
+                };
+                updateCellSize();
+
+                const shuffledNames = shuffleArray([...NAMES]);
+                const positions = shuffleArray(Array.from({ length: numPlayers }, (_, i) => ({
+                    row: Math.floor(i / gridSize),
+                    col: i % gridSize,
+                })));
+
+                for (let i = 0; i < numPlayers; i++) {
+                    state.players.push({
+                        id: i,
+                        name: i === PLAYER_ID ? 'You' : shuffledNames[i],
+                        contestantNumber: Math.floor(Math.random() * 101) + 150,
+                        color: getRandomColor(),
+                        position: positions[i],
+                        isAlive: true,
+                        votes: 0,
+                        timesVotedForEliminated: 0,
+                        similar: [],
+                        dissimilar: [],
+                        isolationScore: 0,
+                    });
+                }
+
+                assignAlliances();
+                updateAllPlayerStats();
+                render();
+            }
+
+            function updateAllPlayerStats() {
+                const alivePlayers = state.players.filter(p => p.isAlive);
+                const distanceCache = {};
+
+                alivePlayers.forEach(player => {
+                    const others = alivePlayers.filter(p => p.id !== player.id);
+                    const distances = others.map(other => {
+                        const minId = Math.min(player.id, other.id);
+                        const maxId = Math.max(player.id, other.id);
+                        const pairKey = `${minId}-${maxId}`;
+
+                        if (distanceCache[pairKey] === undefined) {
+                            distanceCache[pairKey] = colorDistance(player.color, other.color);
+                        }
+
+                        return {
+                            player: other,
+                            dist: distanceCache[pairKey]
+                        };
+                    });
+
+                    distances.sort((a, b) => a.dist - b.dist);
+                    player.similar = distances.slice(0, SIMILAR_COUNT).map(d => d.player);
+                    player.dissimilar = distances.slice(-SIMILAR_COUNT).reverse().map(d => d.player);
+                    player.isolationScore = distances.length > 0 ? distances[0].dist : 0;
+                });
+            }
+
+            function processRound(userVoteId) {
+                const alivePlayers = state.players.filter(p => p.isAlive);
+                alivePlayers.forEach(p => p.votes = 0);
+
+                const roundNumber = state.round;
+
+                const hasUserVote = Number.isInteger(userVoteId) && state.players[PLAYER_ID] && state.players[PLAYER_ID].isAlive;
+                const votedForPlayer = hasUserVote ? state.players[userVoteId] : null;
+                if (votedForPlayer) votedForPlayer.votes++;
+
+                state.lastRoundResults = { round: roundNumber, votes: {}, individualVotes: {}, eliminatedPlayerId: null, tieBreakLog: [] };
+                if (hasUserVote) {
+                    if (!state.lastRoundResults.votes[userVoteId]) state.lastRoundResults.votes[userVoteId] = [];
+                    state.lastRoundResults.votes[userVoteId].push(PLAYER_ID);
+                    state.lastRoundResults.individualVotes[PLAYER_ID] = userVoteId;
+                }
+
+                const alliancePlans = buildAlliancePlans(alivePlayers);
+                const aiPlayers = state.players[PLAYER_ID].isAlive ? alivePlayers.filter(p => p.id !== PLAYER_ID) : alivePlayers;
+                aiPlayers.forEach(ai => {
+                    const chosenTarget = pickAiTarget(ai, alivePlayers, alliancePlans);
+                    if (chosenTarget) {
+                        chosenTarget.votes++;
+                        if (!state.lastRoundResults.votes[chosenTarget.id]) state.lastRoundResults.votes[chosenTarget.id] = [];
+                        state.lastRoundResults.votes[chosenTarget.id].push(ai.id);
+                        state.lastRoundResults.individualVotes[ai.id] = chosenTarget.id;
+                    }
+                });
+
+                let maxVotes = -1;
+                let playersToEliminate = [];
+                alivePlayers.forEach(p => {
+                    if (p.votes > maxVotes) {
+                        maxVotes = p.votes;
+                        playersToEliminate = [p];
+                    } else if (p.votes === maxVotes) {
+                        playersToEliminate.push(p);
+                    }
+                });
+
+                let eliminatedPlayer;
+                if (playersToEliminate.length === 1) {
+                    eliminatedPlayer = playersToEliminate[0];
+                } else {
+                    const tieResolution = resolveEliminationTie(playersToEliminate);
+                    eliminatedPlayer = tieResolution.eliminated;
+                    state.lastRoundResults.tieBreakLog = tieResolution.tieBreakLog;
+                }
+
+                eliminatedPlayer.isAlive = false;
+                state.lastRoundResults.eliminatedPlayerId = eliminatedPlayer.id;
+
+                state.voteHistory.push({
+                    round: roundNumber,
+                    eliminatedPlayerId: eliminatedPlayer.id,
+                    votes: Object.fromEntries(Object.entries(state.lastRoundResults.votes).map(([targetId, voterIds]) => [targetId, [...voterIds]])),
+                    individualVotes: { ...state.lastRoundResults.individualVotes },
+                    tieBreakLog: [...state.lastRoundResults.tieBreakLog],
+                });
+
+                const voters = state.lastRoundResults.votes[eliminatedPlayer.id] || [];
+                voters.forEach(voterId => {
+                    const voter = state.players[voterId];
+                    if (voter) voter.timesVotedForEliminated++;
+                });
+
+                const remainingPlayers = state.players.filter(p => p.isAlive);
+                if (!state.players[PLAYER_ID].isAlive) state.status = 'game-over-loss';
+                else if (remainingPlayers.length <= 1) state.status = 'game-over-win';
+                else {
+                    state.status = 'round-over';
+                    state.round++;
+                    state.selectedOpponentId = null;
+                    updateAllPlayerStats();
+                }
+                render();
+            }
+
+            function runSpectatorRound() {
+                if (state.players[PLAYER_ID].isAlive) return;
+                const remainingPlayers = state.players.filter(p => p.isAlive);
+                if (remainingPlayers.length <= 1) {
+                    state.status = 'spectating-over';
+                    render();
+                    return;
+                }
+
+                processRound(null);
+
+                const remainingAfterRound = state.players.filter(p => p.isAlive);
+                if (remainingAfterRound.length > 1) {
+                    state.round++;
+                    state.selectedOpponentId = null;
+                    updateAllPlayerStats();
+                    state.status = 'spectating';
+                } else {
+                    state.status = 'spectating-over';
+                }
+                render();
+            }
+
+            function updateSelectionUI(id) {
+                state.selectedOpponentId = id;
+
+                const rightCol = document.getElementById('right-column');
+                if (rightCol) {
+                    rightCol.innerHTML = renderRightColumn();
+                }
+
+                document.querySelectorAll('#game-grid td').forEach(td => {
+                    if (td.dataset.id && parseInt(td.dataset.id, 10) === id) {
+                        td.classList.add('selected-cell');
+                    } else {
+                        td.classList.remove('selected-cell');
+                    }
+                });
+            }
+
+            function render() {
+                if (state.status === 'game-over-win' || state.status === 'game-over-loss' || state.status === 'spectating' || state.status === 'spectating-over') {
+                    renderGameOver();
+                    return;
+                }
+
+                let roundMessage = '';
+                if (state.status === 'round-over') {
+                    const eliminatedPlayer = state.players[state.lastRoundResults.eliminatedPlayerId];
+                    roundMessage = `<p style="text-align:center; color: red;">You survived to Round ${state.round}. <strong>${eliminatedPlayer.name} ${eliminatedPlayer.contestantNumber}</strong> was eliminated last round.</p>`;
+                    state.status = 'playing';
+                }
+
+                gameContainer.innerHTML = `
+                    <header class="game-header">
+                        <div class="game-header-grid">
+                            <div class="game-header-main">
+                                <h1>Survive and Advance</h1>
+                                <p>In the early 2000s, many “reality TV” shows sequentially eliminated their contestants. Can you navigate a similar situation? Try to be the last player standing!</p>
+                            </div>
+                            <div class="game-header-controls">
+                                <div class="mode-controls">
+                                    <span><strong>Mode:</strong> ${GAME_MODES[currentMode].label}</span>
+                                    <button class="mode-button ${currentMode === 16 ? 'is-active' : ''}" data-mode="16">16 Players</button>
+                                    <button class="mode-button ${currentMode === 25 ? 'is-active' : ''}" data-mode="25">25 Players</button>
+                                </div>
+                                <div class="ai-controls">
+                                    <span><strong>AI:</strong> ${AI_STYLES[currentAiStyle].label}</span>
+                                    <button class="ai-style-button ${currentAiStyle === 'classic' ? 'is-active' : ''}" data-ai-style="classic">Classic</button>
+                                    <button class="ai-style-button ${currentAiStyle === 'alliances' ? 'is-active' : ''}" data-ai-style="alliances">Alliances</button>
+                                    <button class="ai-style-button ${currentAiStyle === 'reality' ? 'is-active' : ''}" data-ai-style="reality">Reality TV</button>
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+                    ${roundMessage}
+                    <table id="main-layout-table">
+                        <tbody>
+                            <tr>
+                                <td id="left-column">${renderLeftColumn()}</td>
+                                <td id="center-column">${renderCenterColumn()}</td>
+                                <td id="right-column">${renderRightColumn()}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" id="bottom-panel">${renderBottomPanel()}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+            }
+
+            function renderLeftColumn() {
+                const player = state.players[PLAYER_ID];
+                const renderList = (players) => {
+                    let html = '<table class="player-list-table">';
+                    players.forEach(p => {
+                        html += `
+                            <tr>
+                                <td class="player-name-cell">${p.name} ${p.contestantNumber}</td>
+                                <td class="player-color-cell" title="${p.name} ${p.contestantNumber}" aria-label="${p.name} ${p.contestantNumber}" style="background-color:${colorToRgb(p.color)};"></td>
+                            </tr>
+                        `;
+                    });
+                    html += '</table>';
+                    return html;
+                };
+
+                return `
+                    <h3>Most Similar to You</h3>
+                    <p class="panel-subtitle">Here are some potential allies.</p>
+                    ${renderList(player.similar)}
+                    <br>
+                    <h3>Least Similar to You</h3>
+                    <p class="panel-subtitle">Here are some potential targets.</p>
+                    ${renderList(player.dissimilar)}
+                `;
+            }
+
+            function renderCenterColumn() {
+                const player = state.players[PLAYER_ID];
+                const gridPlayers = Array(gridSize).fill(null).map(() => Array(gridSize).fill(null));
+                state.players.filter(p => p.isAlive).forEach(p => {
+                    gridPlayers[p.position.row][p.position.col] = p;
+                });
+
+                let gridHtml = '<table id="game-grid"><tbody>';
+                for (let i = 0; i < gridSize; i++) {
+                    gridHtml += '<tr>';
+                    for (let j = 0; j < gridSize; j++) {
+                        const p = gridPlayers[i][j];
+                        if (p) {
+                            const isSelected = p.id === state.selectedOpponentId ? 'selected-cell' : '';
+                            gridHtml += `<td class="player-cell ${isSelected}" data-id="${p.id}" style="background-color:${colorToRgb(p.color)};"></td>`;
+                        } else {
+                            gridHtml += `<td style="background-color:#f0f0f0; cursor: default;"></td>`;
+                        }
+                    }
+                    gridHtml += '</tr>';
+                }
+                gridHtml += '</tbody></table>';
+
+                return `
+                    <div id="you-info">
+                        You:
+                        <span id="you-info-swatch" style="background-color:${colorToRgb(player.color)};"></span>
+                        (${player.color.r}, ${player.color.g}, ${player.color.b})
+                    </div>
+                    ${gridHtml}
+                `;
+            }
+
+            function renderRightColumn() {
+                if (state.selectedOpponentId !== null) {
+                    const opponent = state.players[state.selectedOpponentId];
+                    const isSelf = opponent.id === PLAYER_ID;
+
+                    const renderSwatchList = (players) => {
+                        return `<ul class="swatch-list">${players.map(p => `
+                            <li><div class="color-swatch" data-id="${p.id}" 
+                                      title="${p.name} ${p.contestantNumber}" aria-label="${p.name} ${p.contestantNumber}"
+                                      style="background-color:${colorToRgb(p.color)}; 
+                                             ${p.id === PLAYER_ID ? 'outline: 1px solid #fff;' : ''} 
+                                             ${state.selectedOpponentId === p.id ? 'box-shadow:0 0 0 2px black;' : ''}"></div></li>
+                        `).join('')}</ul>`;
+                    };
+
+                    return `
+                        <h3>${isSelf ? 'Your Stats' : 'Opponent Info'}</h3>
+                        <div style="text-align: center; margin-bottom: 1em;">
+                            <div><strong>${opponent.name} ${opponent.contestantNumber}</strong></div>
+                            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 4px;">
+                                <div class="color-swatch" style="width: 1.2em; height: 1.2em; background-color: ${colorToRgb(opponent.color)};"></div>
+                                <span style="font-size: 0.85em; color: #e7e7e7;">(${opponent.color.r}, ${opponent.color.g}, ${opponent.color.b})</span>
+                            </div>
+                        </div>
+                        
+                        <h4>Most Similar</h4>
+                        ${renderSwatchList(opponent.similar)}
+                        
+                        <h4>Least Similar</h4>
+                        ${renderSwatchList(opponent.dissimilar)}
+                        
+                        <ul><li><strong>Times voted for players who were eliminated:</strong> ${state.round === 1 ? 'N/A' : opponent.timesVotedForEliminated}</li></ul>
+                        
+                        ${isSelf ?
+                            '<p style="text-align:center; color:#666; font-style:italic; margin-top:1.5em; padding: 0.5em; background: #eee;">You cannot vote for yourself.</p>' :
+                            `<button class="vote-button" data-vote-id="${opponent.id}">Submit Your Vote</button>`
+                        }
+                    `;
+                } else {
+                    return `
+                        <h3>What is this?</h3>
+                        <p>Click on an opposing player (i.e. square) to view their info. You can then decide whether to vote against them this round.</p>
+                        <ul>
+                            <li>The player with the most votes is eliminated.</li>
+                            <li>If there’s a tie, players with more successful elimination votes (in earlier rounds) are safer.</li>
+                            <li>If still tied, the more isolated player is eliminated. If still tied, the lower contestant number loses,
+                            and if still tied, the one with the lower ID loses.</li>
+                            <li>In general, similar colors will not vote against each other. There will be exceptions, however, especially as the game progresses.</li>
+                        </ul>
+                    `;
+                }
+            }
+
+            function renderBottomPanel() {
+                const alivePlayers = state.players.filter(p => p.isAlive);
+                const sortedByIsolation = [...alivePlayers].sort((a, b) => b.isolationScore - a.isolationScore);
+                const isolated = sortedByIsolation.slice(0, 4);
+                const isolatedList = isolated.map(p => `
+                    <li class="isolated-item">
+                        <div class="color-swatch" style="background-color:${colorToRgb(p.color)};
+                                width:1.2em; height:1.2em; display:inline-block; vertical-align:middle;
+                                margin-right:4px;" title="${p.name} ${p.contestantNumber}" aria-label="${p.name} ${p.contestantNumber}"></div>
+                        <strong>${p.name} ${p.contestantNumber}</strong>
+                    </li>
+                `).join('');
+
+                let html = `<h3>Most Isolated Players</h3>
+                    <p>These players are least similar to their closest match. There are pros and cons to this situation.</p>
+                    <ul style="display:inline-flex; gap:2em;">${isolatedList}</ul>`;
+
+                if (state.round > 1 && state.lastRoundResults) {
+                    html = `<h3>Last Round</h3>${renderVoteTally()}<hr>` + html;
+                }
+
+                return html;
+            }
+
+            function renderVoteTally() {
+                const tally = state.lastRoundResults.votes;
+                const sortedTally = Object.entries(tally).sort((a, b) => b[1].length - a[1].length);
+                let html = '<ul>';
+                sortedTally.forEach(([votedForId, voterIds]) => {
+                    const votedForPlayer = state.players[votedForId];
+                    if (!votedForPlayer) return;
+                    html += `<li class="vote-tally-item">
+                        <strong>${votedForPlayer.name} ${votedForPlayer.contestantNumber}</strong>
+                        <span>${voterIds.length} vote${voterIds.length > 1 ? 's' : ''}</span>
+                        <div class="voter-swatches">
+                            ${voterIds.map(id => {
+                                const voter = state.players[id];
+                                if (!voter) return '';
+                                return `<div class="color-swatch" title="${voter.name} ${voter.contestantNumber}" aria-label="${voter.name} ${voter.contestantNumber}" style="background-color:${colorToRgb(voter.color)};"></div>`;
+                            }).join('')}
+                        </div></li>`;
+                });
+
+                if (state.lastRoundResults.tieBreakLog && state.lastRoundResults.tieBreakLog.length > 0) {
+                    html += '</ul>';
+                    html += `<p><strong>Tie-break used:</strong></p><ul>${state.lastRoundResults.tieBreakLog.map(step => `<li>${step}</li>`).join('')}</ul>`;
+                    return html;
+                }
+
+                return html + '</ul>';
+            }
+
+            function renderVotingChart() {
+                if (!state.voteHistory || state.voteHistory.length === 0) return '';
+
+                const rounds = [...state.voteHistory];
+                const finalRound = rounds[rounds.length - 1] || null;
+                const eliminationRoundById = {};
+                rounds.forEach(round => {
+                    eliminationRoundById[round.eliminatedPlayerId] = round.round;
+                });
+
+                const alivePlayers = state.players.filter(p => p.isAlive);
+                const winnerId = alivePlayers.length === 1 ? alivePlayers[0].id : null;
+                const runnerUpId = finalRound ? finalRound.eliminatedPlayerId : null;
+
+                const rows = [...state.players].sort((a, b) => {
+                    const aOut = eliminationRoundById[a.id] ?? Number.MAX_SAFE_INTEGER;
+                    const bOut = eliminationRoundById[b.id] ?? Number.MAX_SAFE_INTEGER;
+                    if (aOut !== bOut) return bOut - aOut;
+                    return a.id - b.id;
+                });
+
+                let html = '<div class="voting-chart-wrapper"><h3>Voting Chart</h3><table class="voting-chart-table"><thead><tr><th>Player</th>';
+                rounds.forEach(round => {
+                    html += `<th>Round ${round.round}</th>`;
+                });
+                html += '<th>Result</th></tr></thead><tbody>';
+
+                rows.forEach(player => {
+                    html += `<tr><td class="voting-chart-player">${player.name} ${player.contestantNumber}</td>`;
+
+                    rounds.forEach(round => {
+                        const elimRound = eliminationRoundById[player.id];
+                        if (elimRound !== undefined && round.round > elimRound) {
+                            html += '<td class="chart-out">—</td>';
+                            return;
+                        }
+
+                        const voteTargetId = round.individualVotes[player.id];
+                        if (voteTargetId === undefined) {
+                            html += '<td class="chart-vote-self">—</td>';
+                            return;
+                        }
+
+                        const votedPlayer = state.players[voteTargetId];
+                        const isCorrectVote = voteTargetId === round.eliminatedPlayerId;
+                        html += `<td class="${isCorrectVote ? 'chart-vote-hit' : ''}">${votedPlayer ? votedPlayer.name : '—'}</td>`;
+                    });
+
+                    if (winnerId !== null && player.id === winnerId) {
+                        html += '<td class="chart-winner">Winner</td>';
+                    } else if (runnerUpId !== null && player.id === runnerUpId) {
+                        html += '<td class="chart-runner-up">Runner-up</td>';
+                    } else if (eliminationRoundById[player.id] !== undefined) {
+                        html += `<td>Out in R${eliminationRoundById[player.id]}</td>`;
+                    } else {
+                        html += '<td>Still In</td>';
+                    }
+
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table></div>';
+                return html;
+            }
+
+            function renderGameOver() {
+                const player = state.players[PLAYER_ID];
+                const aliveCount = state.players.filter(p => p.isAlive).length;
+                const rank = player.isAlive ? 1 : (aliveCount + 1);
+                const remainingPlayers = state.players.filter(p => p.isAlive);
+                const canKeepWatching = !player.isAlive && remainingPlayers.length > 1;
+
+                let winner = state.players.find(p => p.isAlive);
+                if (!winner) {
+                    winner = state.players.reduce((best, p) => {
+                        if (!best || p.timesVotedForEliminated > best.timesVotedForEliminated) {
+                            return p;
+                        }
+                        return best;
+                    }, null);
+                }
+
+                let content;
+                if (state.status === 'game-over-win') {
+                    content = `<h2>Congratulations! You Won!</h2><p>You were the last player standing.</p>`;
+                } else if (state.status === 'spectating-over' && winner) {
+                    content = `
+                        <h2>Final Result</h2>
+                        <p>You were eliminated, and the rest of the game has concluded.</p>
+                        <p><strong>${winner.name} ${winner.contestantNumber}</strong> was the last player standing.</p>
+                    `;
+                } else if (state.status === 'spectating' && winner) {
+                    content = `
+                        <h2>You have been eliminated.</h2>
+                        <p>Round ${state.round - 1} just ended. <strong>${state.players[state.lastRoundResults.eliminatedPlayerId].name} ${state.players[state.lastRoundResults.eliminatedPlayerId].contestantNumber}</strong> was voted out.</p>
+                        <p>${remainingPlayers.length} players remain. Click below to continue watching.</p>
+                    `;
+                } else {
+                    if (rank === 2 && winner) {
+                        const yourElims = player.timesVotedForEliminated;
+                        const winnerElims = winner.timesVotedForEliminated;
+                        content = `
+                            <h2>Sorry! You finished in 2nd place, behind ${winner.name} ${winner.contestantNumber}.</h2>
+                            <p>${winner.name} ${winner.contestantNumber} won because they eliminated more players over the course of this game.</p>
+                            <p>Specifically, ${winner.name} ${winner.contestantNumber} voted out ${winnerElims} player${winnerElims !== 1 ? 's' : ''}, while you voted out ${yourElims} player${yourElims !== 1 ? 's' : ''}.</p>
+                            <p>We hope you had fun. Can you get over the top next time? Click <a href="#" class="try-again-button">here</a> to play another game.</p>
+                        `;
+                    } else {
+                        content = `<h2>Sorry! You have been eliminated.</h2><p>You finished #${rank} of ${numPlayers}.</p>`;
+                    }
+                }
+
+                gameContainer.innerHTML = `
+                    <div style="text-align:center; padding: 2em">
+                        ${content}
+                        <div class="mode-controls">
+                            <span><strong>Mode:</strong> ${GAME_MODES[currentMode].label}</span>
+                            <button class="mode-button ${currentMode === 16 ? 'is-active' : ''}" data-mode="16">16 Players</button>
+                            <button class="mode-button ${currentMode === 25 ? 'is-active' : ''}" data-mode="25">25 Players</button>
+                        </div>
+                        <div class="ai-controls">
+                            <span><strong>AI:</strong> ${AI_STYLES[currentAiStyle].label}</span>
+                            <button class="ai-style-button ${currentAiStyle === 'classic' ? 'is-active' : ''}" data-ai-style="classic">Classic</button>
+                            <button class="ai-style-button ${currentAiStyle === 'alliances' ? 'is-active' : ''}" data-ai-style="alliances">Alliances</button>
+                            <button class="ai-style-button ${currentAiStyle === 'reality' ? 'is-active' : ''}" data-ai-style="reality">Reality TV</button>
+                        </div>
+                        ${canKeepWatching ? '<button class="watch-round-button">Watch Next Round</button>' : ''}
+                        ${(rank !== 2 || !winner) ? '<button class="try-again-button">Play Again</button>' : ''}
+                        ${(state.status === 'game-over-loss' && state.lastRoundResults) ? `<div style="margin-top: 2em; text-align: left; border: 1px solid #ccc; padding: 1em;"><h3>Last Round</h3>${renderVoteTally()}</div>` : ''}
+                        ${(state.status === 'spectating' && state.lastRoundResults) ? `<div style="margin-top: 2em; text-align: left; border: 1px solid #ccc; padding: 1em;"><h3>Latest Round</h3>${renderVoteTally()}</div>` : ''}
+                        ${(state.status === 'spectating-over' && state.lastRoundResults) ? `<div style="margin-top: 2em; text-align: left; border: 1px solid #ccc; padding: 1em;"><h3>Final Round</h3>${renderVoteTally()}</div>` : ''}
+                        ${(state.status === 'game-over-win' || state.status === 'spectating-over') ? renderVotingChart() : ''}
+                    </div>
+                `;
+            }
+
+            gameContainer.addEventListener('click', (e) => {
+                const target = e.target;
+
+                if (target.matches('#game-grid td[data-id]')) {
+                    const id = parseInt(target.dataset.id, 10);
+                    updateSelectionUI(id);
+                }
+
+                if (target.matches('.swatch-list .color-swatch[data-id]')) {
+                    const id = parseInt(target.dataset.id, 10);
+                    updateSelectionUI(id);
+                }
+
+                if (target.matches('.vote-button[data-vote-id]')) {
+                    const voteId = parseInt(target.dataset.voteId, 10);
+                    processRound(voteId);
+                }
+
+                if (target.matches('.try-again-button')) {
+                    initGame();
+                }
+
+                if (target.matches('.watch-round-button')) {
+                    runSpectatorRound();
+                }
+
+                if (target.matches('.mode-button[data-mode]')) {
+                    const mode = parseInt(target.dataset.mode, 10);
+                    initGame(mode);
+                }
+
+                if (target.matches('.ai-style-button[data-ai-style]')) {
+                    currentAiStyle = target.dataset.aiStyle;
+                    render();
+                }
+            });
+
+            initGame();
+
+            let resizeTimeout;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(updateCellSize, 100);
+            });
+        });
+    </script>
+
+</body>
+
+</html>

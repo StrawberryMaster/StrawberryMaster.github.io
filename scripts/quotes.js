@@ -129,7 +129,7 @@ class QuoteManager {
         ]);
     
         // update content
-        quoteElement.textContent = `“${newQuote.quote}”`;
+        quoteElement.textContent = `${newQuote.quote}`;
         authorElement.textContent = `— ${newQuote.author}`;
     
         // fade in!

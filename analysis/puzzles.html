@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzles</title>
+    <meta name="description" content="Kakuro puzzles, Fifteen-tile puzzles, did I say puzzles?">
+    <meta name="theme-color" content="#00b6d5">
+    <!-- The style.css file allows you to change the look of your web pages.
+         If you include the next line in all your web pages, they will all share the same look.
+         This makes it easier to make new pages for your site. -->
+    <link href="../style.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="icon" type="image/x-icon" href="../files/wizardry.ico" />
+    <script src="../scripts/quotes.js"></script>
+    <style>
+        #game-wrapper {
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 1rem 1.5rem;
+        }
+
+        .recreation-note {
+            margin: 1em auto 0;
+            padding: 0 1rem;
+            max-width: 980px;
+            text-align: center;
+        }
+
+        .kakuro-description {
+            margin-bottom: 1.25rem;
+        }
+
+        .kakuro-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .6rem;
+            margin-bottom: .5rem;
+        }
+
+        .puzzle-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .5rem;
+            margin-bottom: 1rem;
+        }
+
+        .puzzle-tab {
+            padding: .4rem .75rem;
+            font-size: .95rem;
+            font-family: inherit;
+            cursor: pointer;
+            background: var(--secondary-bg);
+            border: .1rem solid var(--accent-color);
+            border-radius: .2rem;
+            color: var(--text-color);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .puzzle-tab:hover {
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        .puzzle-tab.is-active {
+            border-color: var(--hover-color);
+            outline: .1rem solid color-mix(in srgb, var(--hover-color), transparent 35%);
+            outline-offset: -1px;
+        }
+
+        .kakuro-button {
+            padding: .45rem .8rem;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            background: var(--secondary-bg);
+            border: .1rem solid var(--accent-color);
+            border-radius: .2rem;
+            color: var(--text-color);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .kakuro-button:hover {
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        .kakuro-grid-container {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(46px, 58px));
+            grid-template-rows: repeat(5, minmax(46px, 58px));
+            gap: 6px;
+            width: fit-content;
+            margin: 1rem auto 0;
+        }
+
+        .kakuro-grid-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .kakuro-grid-item.kakuro-sum {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            background: transparent;
+        }
+
+        .kakuro-grid-item.kakuro-sum.invalid {
+            background-color: rgba(255, 70, 70, 0.6);
+            border: .1rem solid rgba(255, 120, 120, 0.9);
+            color: #2a0000;
+        }
+
+        .kakuro-grid-item.kakuro-sum.valid {
+            background-color: rgba(90, 220, 90, 0.6);
+            border: .1rem solid rgba(140, 255, 140, 0.9);
+            color: #002400;
+        }
+
+        .kakuro-grid-item.kakuro-blocked {
+            background: #000;
+            border: .1rem solid #000;
+        }
+
+        input.kakuro-grid-item.kakuro-input {
+            text-align: center;
+            font-size: 1.15rem;
+            font-family: inherit;
+            color: var(--text-color);
+            background: color-mix(in srgb, var(--primary-bg), transparent 20%);
+            border: none;
+            border-radius: .15rem;
+            width: 100%;
+            height: 100%;
+        }
+
+        input.kakuro-grid-item.kakuro-input:focus {
+            outline: .1rem solid var(--accent-color);
+            outline-offset: -1px;
+        }
+
+        .kakuro-status {
+            margin-top: .9rem;
+            min-height: 1.3em;
+            font-weight: bold;
+        }
+
+        .kakuro-status.is-success {
+            color: var(--hover-color);
+        }
+
+        .kakuro-seed {
+            margin-top: .5rem;
+            opacity: .85;
+        }
+
+        .tile-puzzle-shell {
+            display: grid;
+            place-items: center;
+            gap: .8rem;
+            margin-top: .6rem;
+        }
+
+        .tile-grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(50px, 58px));
+            grid-template-rows: repeat(4, minmax(50px, 58px));
+            gap: 6px;
+        }
+
+        .tile-grid-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            user-select: none;
+            border-radius: .15rem;
+            cursor: pointer;
+        }
+
+        .tile-grid-item.tile-cell {
+            background: color-mix(in srgb, var(--primary-bg), transparent 15%);
+            border: .1rem solid color-mix(in srgb, var(--accent-color), transparent 45%);
+            color: #111;
+        }
+
+        .tile-grid-item.tile-a {
+            background: #ff4040;
+        }
+
+        .tile-grid-item.tile-b {
+            background: #f0a35b;
+        }
+
+        .tile-grid-item.tile-c {
+            background: #5a60e8;
+            color: #f7f7ff;
+        }
+
+        .tile-grid-item.tile-d {
+            background: #74dec2;
+        }
+
+        .tile-grid-item.tile-e {
+            background: #8ed08e;
+        }
+
+        .tile-grid-item.tile-f {
+            background: #20ff10;
+        }
+
+        .tile-grid-item.tile-g {
+            background: #ecec49;
+        }
+
+        .tile-grid-item.tile-h {
+            background: #d7df00;
+        }
+
+        .tile-grid-item.tile-blank {
+            background: transparent;
+            border: .1rem dashed color-mix(in srgb, var(--accent-color), transparent 45%);
+            color: color-mix(in srgb, var(--text-color), transparent 40%);
+            font-size: 2rem;
+        }
+
+        .tile-grid-item.goal-blank {
+            box-shadow: inset 0 0 0 2px var(--accent-color);
+        }
+
+        .tile-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 56px);
+            grid-template-rows: repeat(3, 32px);
+            gap: 6px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tile-control-button {
+            font-family: inherit;
+            background: var(--secondary-bg);
+            border: .1rem solid var(--accent-color);
+            color: var(--text-color);
+            border-radius: .2rem;
+            cursor: pointer;
+        }
+
+        .tile-control-button:hover {
+            background: var(--secondary-bg-hover);
+            border-color: var(--hover-color);
+        }
+
+        #tile-up {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        #tile-down {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        #tile-left {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        #tile-right {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        .tile-moves {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="puzzle-page">
+    <header id="construction-bar">Under construction</header>
+    <header id="header-area">
+        <header id="header-image"></header>
+        <nav id="navbar">
+            <ul>
+                <li><a href="../">Home</a></li>
+                <li><a href="../teahouse">Teahouse</a></li>
+                <li><a href="../collections">Collections</a></li>
+                <li><a href="../analysis"><u>Analysis</u></a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main-container">
+        <p class="recreation-note">Oh hey, these are puzzles. Here you can find web-based version of Python-based versions I made while trying to
+            recreate the puzzles version seen on <a href="https://www.nationstates.net"
+            target="_blank">NationStates</a>. More instructions can be seen below.</p>
+        <hr />
+        <div id="game-wrapper"></div>
+    </main>
+
+    <footer id="quote-footer">
+        <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+            <img alt="Creative Commons License" src="../buttons/cc-by-sa.png" width="88" height="31">
+        </a>
+        <img alt="calmspace" src="../buttons/calmspace.png" width="88" height="31">
+        <img alt="kris where tf are we" src="../buttons/kris.png" width="88" height="31">
+        <img alt="you're telling me a queer coded this" src="../buttons/queercode.png" width="88" height="31">
+        <a target="_blank" href="https://homestuck.giovanh.com/unofficial-homestuck-collection/">
+            <img alt="download sburb!" src="../buttons/sburb.png" width="88" height="31">
+        </a>
+        <a target="_blank" href="https://lucida.to/">
+            <img alt="lucida" src="../buttons/lucida.gif" width="88" height="31">
+        </a><br />
+
+        <div id="footer-links">
+            <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
+            <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
+            <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
+            <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
+        </div>
+
+        <p id="actual-quote"></p>
+        <p id="quote-author"></p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gameContainer = document.getElementById('game-wrapper');
+            const GRID_SIZE = 4;
+            const BLOCK_PATTERNS = [
+                [[0, 2], [0, 3], [3, 0], [3, 1]],
+                [[0, 0], [0, 1], [3, 2], [3, 3]],
+                [[1, 0], [2, 0], [1, 3], [2, 3]],
+                [[0, 3], [1, 3], [2, 0], [3, 0]],
+                [[0, 1], [1, 1], [2, 2], [3, 2]],
+            ];
+            const TILE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+            let currentTab = 'kakuro';
+            let kakuroState = null;
+            let fifteenState = null;
+
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            function randomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function makeEmptyMatrix(fill = 0) {
+                return Array.from({ length: GRID_SIZE }, () => Array.from({ length: GRID_SIZE }, () => fill));
+            }
+
+            function renderTabs() {
+                return `
+                    <div class="puzzle-tabs">
+                        <button type="button" class="puzzle-tab ${currentTab === 'kakuro' ? 'is-active' : ''}" data-tab="kakuro">Kakuro</button>
+                        <button type="button" class="puzzle-tab ${currentTab === 'fifteen' ? 'is-active' : ''}" data-tab="fifteen">15-Tile Puzzle</button>
+                    </div>
+                `;
+            }
+
+            function getPatternSet(pattern) {
+                return new Set(pattern.map(([row, col]) => `${row}-${col}`));
+            }
+
+            function generateSolvedGrid(blockedSet) {
+                const grid = makeEmptyMatrix(0);
+
+                function isBlocked(row, col) {
+                    return blockedSet.has(`${row}-${col}`);
+                }
+
+                function canPlace(row, col, value) {
+                    for (let i = 0; i < GRID_SIZE; i++) {
+                        if (i !== col && !isBlocked(row, i) && grid[row][i] === value) return false;
+                        if (i !== row && !isBlocked(i, col) && grid[i][col] === value) return false;
+                    }
+                    return true;
+                }
+
+                const openCells = [];
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        if (!isBlocked(row, col)) openCells.push([row, col]);
+                    }
+                }
+                shuffleArray(openCells);
+
+                function backtrack(index) {
+                    if (index >= openCells.length) return true;
+                    const [row, col] = openCells[index];
+                    const digits = shuffleArray([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+                    for (const digit of digits) {
+                        if (!canPlace(row, col, digit)) continue;
+                        grid[row][col] = digit;
+                        if (backtrack(index + 1)) return true;
+                        grid[row][col] = 0;
+                    }
+                    return false;
+                }
+
+                return backtrack(0) ? grid : null;
+            }
+
+            function sumForRowsAndCols(grid, blockedSet) {
+                const rows = [];
+                const cols = [];
+
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    let rowSum = 0;
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        if (!blockedSet.has(`${row}-${col}`)) rowSum += grid[row][col];
+                    }
+                    rows.push(rowSum);
+                }
+
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    let colSum = 0;
+                    for (let row = 0; row < GRID_SIZE; row++) {
+                        if (!blockedSet.has(`${row}-${col}`)) colSum += grid[row][col];
+                    }
+                    cols.push(colSum);
+                }
+
+                return { rows, cols };
+            }
+
+            function regenerateKakuro() {
+                let solved = null;
+                let blocked = null;
+
+                for (let attempts = 0; attempts < 80; attempts++) {
+                    const candidatePattern = BLOCK_PATTERNS[randomInt(0, BLOCK_PATTERNS.length - 1)];
+                    const blockedSet = getPatternSet(candidatePattern);
+                    const candidateSolved = generateSolvedGrid(blockedSet);
+                    if (candidateSolved) {
+                        solved = candidateSolved;
+                        blocked = candidatePattern;
+                        break;
+                    }
+                }
+
+                if (!solved || !blocked) {
+                    const fallbackPattern = BLOCK_PATTERNS[0];
+                    const fallbackSet = getPatternSet(fallbackPattern);
+                    solved = generateSolvedGrid(fallbackSet) || [
+                        [8, 4, 0, 0],
+                        [7, 1, 9, 5],
+                        [6, 2, 1, 3],
+                        [0, 0, 2, 1],
+                    ];
+                    blocked = fallbackPattern;
+                }
+
+                const blockedSet = getPatternSet(blocked);
+                const sums = sumForRowsAndCols(solved, blockedSet);
+
+                kakuroState = {
+                    seed: randomInt(10000, 99999),
+                    blocked,
+                    blockedSet,
+                    solved,
+                    rows: sums.rows,
+                    cols: sums.cols,
+                    values: makeEmptyMatrix(0),
+                };
+
+                if (currentTab === 'kakuro') render();
+            }
+
+            function getTileGoalValue(index) {
+                return Math.floor(index / 2);
+            }
+
+            function cloneBoard(board) {
+                return board.map(row => [...row]);
+            }
+
+            function locateBlank(board) {
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        if (board[row][col] === -1) return { row, col };
+                    }
+                }
+                return { row: 0, col: 0 };
+            }
+
+            function createFifteenSolvedBoard(goalBlank) {
+                const board = makeEmptyMatrix(0);
+                for (let idx = 0; idx < GRID_SIZE * GRID_SIZE; idx++) {
+                    const row = Math.floor(idx / GRID_SIZE);
+                    const col = idx % GRID_SIZE;
+                    board[row][col] = idx === goalBlank ? -1 : getTileGoalValue(idx);
+                }
+                return board;
+            }
+
+            function swapBoard(board, r1, c1, r2, c2) {
+                const temp = board[r1][c1];
+                board[r1][c1] = board[r2][c2];
+                board[r2][c2] = temp;
+            }
+
+            function tryMoveBlank(board, direction) {
+                const blank = locateBlank(board);
+                const vectors = [
+                    { dr: -1, dc: 0 },
+                    { dr: 1, dc: 0 },
+                    { dr: 0, dc: -1 },
+                    { dr: 0, dc: 1 },
+                ];
+                const move = vectors[direction];
+                if (!move) return false;
+
+                const nextRow = blank.row + move.dr;
+                const nextCol = blank.col + move.dc;
+                if (nextRow < 0 || nextRow >= GRID_SIZE || nextCol < 0 || nextCol >= GRID_SIZE) return false;
+
+                swapBoard(board, blank.row, blank.col, nextRow, nextCol);
+                return true;
+            }
+
+            function regenerateFifteen() {
+                const goalBlank = randomInt(0, GRID_SIZE * GRID_SIZE - 1);
+                const board = createFifteenSolvedBoard(goalBlank);
+                const shuffleMoves = randomInt(60, 120);
+                let previousDirection = -1;
+
+                for (let i = 0; i < shuffleMoves; i++) {
+                    const dirs = shuffleArray([0, 1, 2, 3]).filter(direction => {
+                        if (previousDirection === -1) return true;
+                        if (previousDirection === 0 && direction === 1) return false;
+                        if (previousDirection === 1 && direction === 0) return false;
+                        if (previousDirection === 2 && direction === 3) return false;
+                        if (previousDirection === 3 && direction === 2) return false;
+                        return true;
+                    });
+
+                    let moved = false;
+                    for (const direction of dirs) {
+                        if (tryMoveBlank(board, direction)) {
+                            previousDirection = direction;
+                            moved = true;
+                            break;
+                        }
+                    }
+                    if (!moved) previousDirection = -1;
+                }
+
+                fifteenState = {
+                    seed: randomInt(100000, 999999),
+                    board,
+                    goalBlank,
+                    moves: 0,
+                };
+
+                if (currentTab === 'fifteen') render();
+            }
+
+            function buildKakuroGridHtml() {
+                let html = '<div class="kakuro-grid-container">';
+                html += '<div class="kakuro-grid-item"></div>';
+
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    html += `<div class="kakuro-grid-item kakuro-sum" data-col-sum="${col}">${kakuroState.cols[col]}</div>`;
+                }
+
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    html += `<div class="kakuro-grid-item kakuro-sum" data-row-sum="${row}">${kakuroState.rows[row]}</div>`;
+
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        const key = `${row}-${col}`;
+                        if (kakuroState.blockedSet.has(key)) {
+                            html += '<div class="kakuro-grid-item kakuro-blocked" aria-hidden="true"></div>';
+                        } else {
+                            html += `<input type="number" class="kakuro-grid-item kakuro-input" min="1" max="9" inputmode="numeric" name="number_${row}_${col}" data-row="${row}" data-col="${col}" value="" aria-label="Row ${row + 1}, Column ${col + 1}">`;
+                        }
+                    }
+                }
+
+                html += '</div>';
+                return html;
+            }
+
+            function buildFifteenGridHtml() {
+                let html = '<div class="tile-grid-container">';
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    for (let col = 0; col < GRID_SIZE; col++) {
+                        const idx = row * GRID_SIZE + col;
+                        const value = fifteenState.board[row][col];
+                        const isBlank = value === -1;
+                        const classes = ['tile-grid-item', isBlank ? 'tile-blank' : 'tile-cell'];
+                        if (!isBlank) classes.push(`tile-${TILE_LABELS[value].toLowerCase()}`);
+                        if (idx === fifteenState.goalBlank) classes.push('goal-blank');
+                        const label = isBlank ? '·' : TILE_LABELS[value];
+                        html += `<button type="button" class="${classes.join(' ')}" data-tile-index="${idx}">${label}</button>`;
+                    }
+                }
+                html += '</div>';
+                return html;
+            }
+
+            function renderKakuroView() {
+                return `
+                    <section>
+                        <h1>Kakuro</h1>
+                        <div class="kakuro-description">
+                            <p>You have a 4x4 grid of numbers that you have to fill in. The hints on the top and left edge tell you the sum of the numbers in the row or column.</p>
+                            <p>The numbers you can use are 1-9, and you can't use the same number twice in a the same row or column.</p>
+                            
+                        </div>
+                        <div class="kakuro-buttons">
+                            <button type="button" class="kakuro-button" id="validate-puzzle">Validate</button>
+                            <button type="button" class="kakuro-button" id="regenerate-puzzle">Regenerate Puzzle</button>
+                        </div>
+                        ${buildKakuroGridHtml()}
+                        <p class="kakuro-seed"><i>Seed: ${kakuroState.seed.toLocaleString()}</i></p>
+                        <p id="kakuro-status" class="kakuro-status"></p>
+                    </section>
+                `;
+            }
+
+            function renderFifteenView() {
+                return `
+                    <section>
+                        <h1>Fifteen-Tile Puzzle</h1>
+                        <div class="kakuro-description">
+                            <p>You have a 4-by-4 grid of squares that need to be arranged back into order. The blank space (marked
+                                with a dot) can swap places with the squares in each of the four cardinal directions. Use this to
+                                position it into the target square (marked with a blank border). While doing so, you must order the
+                                other squares so that the rows form into AABB, CCDD, EEFF and GGHH, descending.</p>
+                            <p>Move the blank with arrow keys, the control buttons, or by clicking a neighboring tile.</p>
+                        </div>
+                        <div class="kakuro-buttons">
+                            <button type="button" class="kakuro-button" id="validate-fifteen">Validate</button>
+                            <button type="button" class="kakuro-button" id="regenerate-fifteen">Regenerate Puzzle</button>
+                        </div>
+                        <div class="tile-puzzle-shell">
+                            <p id="tile-moves" class="tile-moves">Moves: ${fifteenState.moves}</p>
+                            ${buildFifteenGridHtml()}
+                            <div class="tile-controls">
+                                <button type="button" id="tile-up" class="tile-control-button">Up</button>
+                                <button type="button" id="tile-down" class="tile-control-button">Down</button>
+                                <button type="button" id="tile-left" class="tile-control-button">Left</button>
+                                <button type="button" id="tile-right" class="tile-control-button">Right</button>
+                            </div>
+                        </div>
+                        <p class="kakuro-seed"><i>Seed: ${fifteenState.seed.toLocaleString()}</i></p>
+                        <p id="fifteen-status" class="kakuro-status"></p>
+                    </section>
+                `;
+            }
+
+            function render() {
+                const content = currentTab === 'kakuro' ? renderKakuroView() : renderFifteenView();
+                gameContainer.innerHTML = `${renderTabs()}${content}`;
+                bindCommonEvents();
+                if (currentTab === 'kakuro') bindKakuroInputs();
+                if (currentTab === 'fifteen') bindFifteenInputs();
+            }
+
+            function bindCommonEvents() {
+                gameContainer.querySelectorAll('.puzzle-tab').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const nextTab = button.dataset.tab;
+                        if (!nextTab || nextTab === currentTab) return;
+                        currentTab = nextTab;
+                        render();
+                    });
+                });
+            }
+
+            function getKakuroCellMatrix() {
+                const matrix = makeEmptyMatrix(null);
+                const cells = Array.from(gameContainer.querySelectorAll('.kakuro-input'));
+                cells.forEach(cell => {
+                    const row = Number(cell.dataset.row);
+                    const col = Number(cell.dataset.col);
+                    matrix[row][col] = cell;
+                });
+                return matrix;
+            }
+
+            function updateKakuroValues() {
+                const cells = Array.from(gameContainer.querySelectorAll('.kakuro-input'));
+                cells.forEach(cell => {
+                    const row = Number(cell.dataset.row);
+                    const col = Number(cell.dataset.col);
+                    const parsed = parseInt(cell.value, 10);
+                    kakuroState.values[row][col] = Number.isInteger(parsed) ? parsed : 0;
+                });
+            }
+
+            function evaluateLine(values, target, blockedIndexes) {
+                let sum = 0;
+                const seen = new Set();
+                let hasEmpty = false;
+                let isInvalid = false;
+                let filledCount = 0;
+
+                values.forEach((value, index) => {
+                    if (blockedIndexes.has(index)) return;
+                    if (!value) {
+                        hasEmpty = true;
+                        return;
+                    }
+                    filledCount++;
+                    sum += value;
+                    if (value < 1 || value > 9 || seen.has(value)) isInvalid = true;
+                    seen.add(value);
+                });
+
+                if (isInvalid) return -1;
+                if (sum > target) return -1;
+                if (filledCount === 0) return 0;
+                if (!hasEmpty && sum !== target) return -1;
+                return 1;
+            }
+
+            function isLineSolved(values, target, blockedIndexes) {
+                let sum = 0;
+                const seen = new Set();
+
+                for (let index = 0; index < values.length; index++) {
+                    if (blockedIndexes.has(index)) continue;
+                    const value = values[index];
+                    if (!value || value < 1 || value > 9 || seen.has(value)) return false;
+                    seen.add(value);
+                    sum += value;
+                }
+
+                return sum === target;
+            }
+
+            function paintSumCell(cell, stateValue) {
+                cell.classList.remove('valid', 'invalid');
+                if (stateValue === 1) cell.classList.add('valid');
+                if (stateValue === -1) cell.classList.add('invalid');
+            }
+
+            function checkKakuroRowAndCol(row, col) {
+                updateKakuroValues();
+
+                const rowBlockedIndexes = new Set();
+                const colBlockedIndexes = new Set();
+                for (let i = 0; i < GRID_SIZE; i++) {
+                    if (kakuroState.blockedSet.has(`${row}-${i}`)) rowBlockedIndexes.add(i);
+                    if (kakuroState.blockedSet.has(`${i}-${col}`)) colBlockedIndexes.add(i);
+                }
+
+                const rowValues = kakuroState.values[row];
+                const colValues = kakuroState.values.map(r => r[col]);
+
+                const rowState = evaluateLine(rowValues, kakuroState.rows[row], rowBlockedIndexes);
+                const colState = evaluateLine(colValues, kakuroState.cols[col], colBlockedIndexes);
+
+                const rowSumCell = gameContainer.querySelector(`[data-row-sum="${row}"]`);
+                const colSumCell = gameContainer.querySelector(`[data-col-sum="${col}"]`);
+                if (rowSumCell) paintSumCell(rowSumCell, rowState);
+                if (colSumCell) paintSumCell(colSumCell, colState);
+            }
+
+            function switchSelectedCell(row, col, direction, cellMatrix) {
+                const vectors = {
+                    ArrowUp: [-1, 0],
+                    ArrowDown: [1, 0],
+                    ArrowLeft: [0, -1],
+                    ArrowRight: [0, 1],
+                };
+
+                if (!vectors[direction]) return;
+                const [dRow, dCol] = vectors[direction];
+                const nextRow = row + dRow;
+                const nextCol = col + dCol;
+                if (nextRow < 0 || nextRow >= GRID_SIZE || nextCol < 0 || nextCol >= GRID_SIZE) return;
+
+                const nextCell = cellMatrix[nextRow][nextCol];
+                if (!nextCell) return;
+                nextCell.focus();
+            }
+
+            function checkAllKakuroLines() {
+                for (let i = 0; i < GRID_SIZE; i++) {
+                    checkKakuroRowAndCol(i, i);
+                }
+            }
+
+            function kakuroSolved() {
+                for (let row = 0; row < GRID_SIZE; row++) {
+                    const rowBlockedIndexes = new Set();
+                    for (let c = 0; c < GRID_SIZE; c++) {
+                        if (kakuroState.blockedSet.has(`${row}-${c}`)) rowBlockedIndexes.add(c);
+                    }
+                    if (!isLineSolved(kakuroState.values[row], kakuroState.rows[row], rowBlockedIndexes)) return false;
+                }
+
+                for (let col = 0; col < GRID_SIZE; col++) {
+                    const colBlockedIndexes = new Set();
+                    for (let r = 0; r < GRID_SIZE; r++) {
+                        if (kakuroState.blockedSet.has(`${r}-${col}`)) colBlockedIndexes.add(r);
+                    }
+                    if (!isLineSolved(kakuroState.values.map(r => r[col]), kakuroState.cols[col], colBlockedIndexes)) return false;
+                }
+
+                return true;
+            }
+
+            function nudgeCellValue(cell, step) {
+                const row = Number(cell.dataset.row);
+                const col = Number(cell.dataset.col);
+                const current = Number.parseInt(cell.value, 10);
+
+                let nextValue;
+                if (!Number.isInteger(current)) {
+                    nextValue = step > 0 ? 1 : 9;
+                } else {
+                    nextValue = current + step;
+                    if (nextValue > 9) nextValue = 1;
+                    if (nextValue < 1) nextValue = 9;
+                }
+
+                cell.value = String(nextValue);
+                checkKakuroRowAndCol(row, col);
+                showStatus('kakuro-status', '');
+            }
+
+            function showStatus(id, message, isSuccess = false) {
+                const status = document.getElementById(id);
+                if (!status) return;
+                status.textContent = message;
+                status.classList.toggle('is-success', Boolean(isSuccess));
+            }
+
+            function bindKakuroInputs() {
+                const cellMatrix = getKakuroCellMatrix();
+                const cells = Array.from(gameContainer.querySelectorAll('.kakuro-input'));
+
+                cells.forEach(cell => {
+                    cell.addEventListener('input', (event) => {
+                        let value = event.target.value;
+                        if (value.length > 1) value = value.slice(-1);
+                        if (value === '0') value = '';
+                        if (value && !/^[1-9]$/.test(value)) value = '';
+                        event.target.value = value;
+
+                        const row = Number(event.target.dataset.row);
+                        const col = Number(event.target.dataset.col);
+                        checkKakuroRowAndCol(row, col);
+                        showStatus('kakuro-status', '');
+                    });
+
+                    cell.addEventListener('keydown', (event) => {
+                        const row = Number(event.target.dataset.row);
+                        const col = Number(event.target.dataset.col);
+
+                        if (event.key === 'ArrowUp') {
+                            event.preventDefault();
+                            nudgeCellValue(event.target, 1);
+                            return;
+                        }
+
+                        if (event.key === 'ArrowDown') {
+                            event.preventDefault();
+                            nudgeCellValue(event.target, -1);
+                            return;
+                        }
+
+                        if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                            event.preventDefault();
+                            switchSelectedCell(row, col, event.key, cellMatrix);
+                        }
+                    });
+                });
+
+                const validateButton = document.getElementById('validate-puzzle');
+                if (validateButton) {
+                    validateButton.addEventListener('click', () => {
+                        updateKakuroValues();
+                        checkAllKakuroLines();
+                        if (kakuroSolved()) {
+                            showStatus('kakuro-status', 'Puzzle solved. Nice work! Here\'s a, uh, cookie.', true);
+                        } else {
+                            showStatus('kakuro-status', 'Whoops, that\'s not the correct solution! Check highlighted row/column sums and duplicates.');
+                        }
+                    });
+                }
+
+                const regenerateButton = document.getElementById('regenerate-puzzle');
+                if (regenerateButton) {
+                    regenerateButton.addEventListener('click', () => {
+                        regenerateKakuro();
+                    });
+                }
+
+                checkAllKakuroLines();
+            }
+
+            function fifteenIsSolved() {
+                for (let idx = 0; idx < GRID_SIZE * GRID_SIZE; idx++) {
+                    const row = Math.floor(idx / GRID_SIZE);
+                    const col = idx % GRID_SIZE;
+                    const value = fifteenState.board[row][col];
+                    if (idx === fifteenState.goalBlank) {
+                        if (value !== -1) return false;
+                        continue;
+                    }
+                    if (value !== getTileGoalValue(idx)) return false;
+                }
+                return true;
+            }
+
+            function moveFifteen(direction) {
+                if (!tryMoveBlank(fifteenState.board, direction)) return;
+                fifteenState.moves += 1;
+                render();
+                if (fifteenIsSolved()) {
+                    showStatus('fifteen-status', 'Puzzle solved. Nice work! Here\'s a, uh, cookie.', true);
+                }
+            }
+
+            function bindFifteenInputs() {
+                const controls = {
+                    'tile-up': 0,
+                    'tile-down': 1,
+                    'tile-left': 2,
+                    'tile-right': 3,
+                };
+
+                Object.entries(controls).forEach(([id, direction]) => {
+                    const button = document.getElementById(id);
+                    if (!button) return;
+                    button.addEventListener('click', () => moveFifteen(direction));
+                });
+
+                const validateButton = document.getElementById('validate-fifteen');
+                if (validateButton) {
+                    validateButton.addEventListener('click', () => {
+                        if (fifteenIsSolved()) {
+                            showStatus('fifteen-status', 'Puzzle solved. Nice work! Here\'s a, uh, cookie.', true);
+                        } else {
+                            showStatus('fifteen-status', 'Whoops, that\'s not the correct solution! Try moving tiles toward the target pattern.');
+                        }
+                    });
+                }
+
+                const regenerateButton = document.getElementById('regenerate-fifteen');
+                if (regenerateButton) {
+                    regenerateButton.addEventListener('click', () => {
+                        regenerateFifteen();
+                    });
+                }
+
+                gameContainer.querySelectorAll('[data-tile-index]').forEach(tile => {
+                    tile.addEventListener('click', () => {
+                        const index = Number(tile.dataset.tileIndex);
+                        const row = Math.floor(index / GRID_SIZE);
+                        const col = index % GRID_SIZE;
+                        const blank = locateBlank(fifteenState.board);
+
+                        if (row === blank.row - 1 && col === blank.col) moveFifteen(0);
+                        else if (row === blank.row + 1 && col === blank.col) moveFifteen(1);
+                        else if (row === blank.row && col === blank.col - 1) moveFifteen(2);
+                        else if (row === blank.row && col === blank.col + 1) moveFifteen(3);
+                    });
+                });
+            }
+
+            function onFifteenKeydown(event) {
+                if (currentTab !== 'fifteen') return;
+                if (event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    moveFifteen(0);
+                } else if (event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    moveFifteen(1);
+                } else if (event.key === 'ArrowLeft') {
+                    event.preventDefault();
+                    moveFifteen(2);
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    moveFifteen(3);
+                }
+            }
+
+            regenerateKakuro();
+            regenerateFifteen();
+            document.addEventListener('keydown', onFifteenKeydown);
+            render();
+        });
+    </script>
+
+</body>
+
+</html>

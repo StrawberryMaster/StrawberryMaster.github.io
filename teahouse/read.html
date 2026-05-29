@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Teahouse Reader</title>
+  <meta name="description" content="Read imported teahouse works directly on the site.">
+  <meta name="keywords" content="teahouse, reader, stories, ao3, archive of our own, fanfiction">
+  <meta name="author" content="StrawberryMaster">
+  <meta name="theme-color" content="#213E28">
+  <link href="../style.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="icon" type="image/x-icon" href="../files/wizardry.ico">
+  <script src="../scripts/quotes.js"></script>
+  <script src="../scripts/backtotop.js"></script>
+</head>
+
+<body class="teahouse-page teahouse-reader-page">
+  <header id="construction-bar">Under construction</header>
+  <header id="header-area">
+    <header id="header-image"></header>
+    <nav id="navbar">
+      <ul>
+        <li><a href="../">Home</a></li>
+        <li><a href="../teahouse"><u>Teahouse</u></a></li>
+        <li><a href="../collections">Collections</a></li>
+        <li><a href="../analysis">Analysis</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <button id="toc-toggle" aria-label="Toggle table of contents">☰</button>
+
+  <nav id="toc-panel" aria-label="Story contents">
+    <h3>Contents</h3>
+    <div class="reader-toc-meta">
+      <p id="reader-toc-title"></p>
+      <p id="reader-toc-summary"></p>
+      <p id="reader-toc-status"></p>
+    </div>
+    <ul id="reader-toc-list"></ul>
+    <hr />
+    <a class="reader-back-link" id="reader-back-link" href="../teahouse">Back to teahouse</a>
+    <br />
+    <a class="reader-back-link" id="reader-ao3-link" href="#" target="_blank" rel="noopener noreferrer">Open on AO3</a>
+  </nav>
+
+  <main id="main-container" class="reader-shell">
+    <section class="reader-intro">
+      <div class="reader-kicker">Teahouse Reader</div>
+      <h1 id="reader-title" class="reader-title">Loading work...</h1>
+      <p id="reader-status" class="reader-status"></p>
+      <p id="reader-summary" class="reader-summary"></p>
+
+      <div id="reader-meta-grid" class="reader-meta-grid"></div>
+
+      <div id="reader-notes-section" class="reader-notes-section" style="display: none;">
+        <div class="reader-note-block">
+          <p><strong>Author's Notes</strong></p>
+          <blockquote class="userstuff" id="reader-notes"></blockquote>
+        </div>
+      </div>
+
+      <div class="reader-actions">
+        <a class="reader-chip" id="reader-back-link-top" href="../teahouse">Back to teahouse</a>
+        <a class="reader-chip" id="reader-ao3-link-top" href="#" target="_blank" rel="noopener noreferrer">Read on AO3</a>
+      </div>
+    </section>
+
+    <section class="reader-controls" aria-label="Chapter controls">
+      <div class="reader-nav">
+        <button id="prev-chapter" class="reader-button" type="button">Previous</button>
+        <select id="chapter-select" class="reader-select" aria-label="Choose chapter"></select>
+        <button id="next-chapter" class="reader-button" type="button">Next</button>
+      </div>
+      <div id="chapter-status" class="reader-status">Loading chapters...</div>
+    </section>
+
+    <article id="reader-content" class="reader-content" aria-live="polite"></article>
+  </main>
+
+  <footer id="quote-footer">
+    <a rel="license" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+      <img alt="Creative Commons License" src="../buttons/cc-by-sa.png" width="88" height="31"></a>
+    <img alt="papel" src="../buttons/papel.png" width="88" height="31">
+    <img alt="calmspace" src="../buttons/calmspace.png" width="88" height="31">
+    <img alt="kris where tf are we" src="../buttons/kris.png" width="88" height="31">
+    <img alt="you’re telling me a queer coded this" src="../buttons/queercode.png" width="88" height="31">
+    <a target="_blank" href="https://homestuck.giovanh.com/unofficial-homestuck-collection/">
+      <img alt="download sburb!" src="../buttons/sburb.png" width="88" height="31"></a>
+    <a target="_blank" href="https://lucida.to/">
+      <img alt="lucida" src="../buttons/lucida.gif" width="88" height="31"></a>
+    <br/>
+
+    <div id="footer-links">
+      <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
+      <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
+      <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
+      <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
+    </div>
+
+    <p id="actual-quote"></p>
+    <p id="quote-author"></p>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script src="../scripts/teahouse-reader-data.js"></script>
+  <script src="../scripts/teahouse-reader.js"></script>
+</body>
+
+</html>

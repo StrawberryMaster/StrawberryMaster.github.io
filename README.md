@@ -1,2 +1,4 @@
 # StrawberryMaster.github.io
 A repository for StrawberryMaster's World. Nothing else to see here, for now.
+
+**Note:** county returns come from Algara–Sharif (1928–1996), MIT Election Data + Science Lab (2000–2016), and official county canvasses (2020–2024), with pre-1972 state totals reconciled to official results (notably NY, where ALP/Liberal fusion votes for the Democratic nominee were coded third-party, and Alabama’s 1948/1964 Democratic-line slates). See [MapWisePolitics' Election Shuffler](https://mapwisepolitics.us/projects/shuffler/) for more details on the data sources, methodology, and other attributions/disclaimers.

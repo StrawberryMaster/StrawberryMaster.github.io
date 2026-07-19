@@ -7,16 +7,16 @@
     // parse the existing book cards from the markup
     const cards = Array.from(grid.querySelectorAll('.book-card'));
     const bookData = cards.map((card, index) => {
-        const title = card.querySelector('h3').innerHTML;
+        const title = card.querySelector('h3').textContent;
         const author = card.querySelector('.author').textContent;
         const img = card.querySelector('img').src;
-        const detailsHtml = card.querySelector('.book-card-details').innerHTML;
+        const detailsNode = card.querySelector('.book-card-details');
         
         return {
             title,
             author,
             img,
-            detailsHtml,
+            detailsNode: detailsNode ? detailsNode.cloneNode(true) : null,
             sortTitle: card.getAttribute('data-title') || '',
             sortAuthor: card.getAttribute('data-author') || '',
             sortDate: card.getAttribute('data-date') || '',
@@ -67,7 +67,12 @@
             const angle = i * (360 / N);
             item.style.setProperty('--angle', angle);
             
-            item.innerHTML = `<img src="${book.img}" alt="${book.title}" draggable="false" loading="lazy">`;
+            const image = document.createElement('img');
+            image.src = book.img;
+            image.alt = book.title;
+            image.draggable = false;
+            image.loading = 'lazy';
+            item.appendChild(image);
             
             item.addEventListener('click', () => {
                 if (isDragging) return;
@@ -141,13 +146,21 @@
         infoTimeoutId = setTimeout(() => {
             const activeBook = bookData[activeIndex];
             if (!activeBook) return;
-            infoPanel.innerHTML = `
-              <h3>${activeBook.title}</h3>
-              <p class="author">${activeBook.author}</p>
-              <div class="book-card-details">
-                ${activeBook.detailsHtml}
-              </div>
-            `;
+            const titleEl = document.createElement('h3');
+            titleEl.textContent = activeBook.title;
+
+            const authorEl = document.createElement('p');
+            authorEl.className = 'author';
+            authorEl.textContent = activeBook.author;
+
+            const detailsEl = activeBook.detailsNode
+                ? activeBook.detailsNode.cloneNode(true)
+                : document.createElement('div');
+            if (!detailsEl.classList.contains('book-card-details')) {
+                detailsEl.className = 'book-card-details';
+            }
+
+            infoPanel.replaceChildren(titleEl, authorEl, detailsEl);
             infoPanel.style.opacity = '1';
             infoPanel.style.transform = 'scale(1)';
         }, 150);

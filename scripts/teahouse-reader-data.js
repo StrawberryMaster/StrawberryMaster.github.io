@@ -2,15 +2,15 @@ window.TEAHOUSE_WORKS = {
   "as-it-is-when-it-was": {
     "slug": "as-it-is-when-it-was",
     "title": "As It Is When It Was",
-    "author": "opapeldetrouxa",
+    "author": "",
     "fandom": "The Eltingville Club (Comics), Welcome to Eltingville (Cartoon 2002)",
     "category": "Gen | M/M",
     "rating": "Teen And Up Audiences",
     "warnings": "No Archive Warnings Apply",
     "language": "English",
-    "published": "2025-05-02",
-    "words": "9,584",
-    "sourceUrl": "https://archiveofourown.org/works/65213893",
+    "published": "",
+    "words": "",
+    "sourceUrl": "",
     "summary": "At a late-night club meeting, a game of dominoes between Bill and Jerry goes horribly wrong. Now with a bonus chapter!",
     "notes": "I'm not entirely sure why I made this. But I guess this will do!",
     "categories": [
@@ -41,11 +41,11 @@ window.TEAHOUSE_WORKS = {
     ],
     "chapters": [
       {
-        "title": "Chapter 1: Home and Dry",
+        "title": "Chapter 1",
         "src": "./works/as-it-is-when-it-was/chapter-1.html"
       },
       {
-        "title": "Chapter 2: Every Little Counts",
+        "title": "Chapter 2",
         "src": "./works/as-it-is-when-it-was/chapter-2.html"
       }
     ]
@@ -1201,6 +1201,103 @@ window.TEAHOUSE_WORKS = {
       {
         "title": "Chapter 11: O Juízo Final",
         "src": "./works/entao-voce-acredita-em-milagres/chapter-11.html"
+      }
+    ]
+  },
+  "half-a-person": {
+    "slug": "half-a-person",
+    "title": "Half A Person",
+    "author": "",
+    "fandom": "Stranger Things (TV 2016)",
+    "category": "Gen | M/M",
+    "rating": "Teen And Up Audiences",
+    "warnings": "No Archive Warnings Apply",
+    "language": "English",
+    "published": "",
+    "words": "",
+    "sourceUrl": "",
+    "summary": "A lethargic Will is hiding the slow-burning torture of living in the same house as Mike. In the midst of a collapsing town, he and Dustin somehow find a moment to share a sandwich, and have a vaguely important conversation.",
+    "notes": "Well, here's a funny story. I actually had this more or less written since mid to late December. It was a good idea, but I couldn't get what I wanted in time (before New Years) and left it sitting on my desk for a long while. By the time I got back to it, a lot had changed, but I took some time to touch this up and finish what I wanted. Hoping this is still somewhat accurate. Enjoy!",
+    "categories": [
+      "Gen",
+      "M/M"
+    ],
+    "relationships": [
+      "Will Byers & Dustin Henderson",
+      "Will Byers/Mike Wheeler"
+    ],
+    "characters": [
+      "Will Byers",
+      "Dustin Henderson",
+      "Mike Wheeler",
+      "Lucas Sinclair",
+      "Joyce Byers",
+      "Jonathan Byers",
+      "Claudia Henderson (mentioned)"
+    ],
+    "tags": [
+      "Light Angst",
+      "Hurt/Comfort",
+      "gratuitous depictions of cooking",
+      "Sleepover?",
+      "Will Byers Needs a Hug",
+      "whimsical nonsense!!!",
+      "and some theraphy probably",
+      "What Was I Thinking?",
+      "a bit of a slapstick feel",
+      "I Wrote This While Listening to Felt"
+    ],
+    "chapters": [
+      {
+        "title": "Chapter 1",
+        "src": "./works/half-a-person/chapter-1.html"
+      }
+    ]
+  },
+  "is-this-pain-our-pleasure": {
+    "slug": "is-this-pain-our-pleasure",
+    "title": "Is This Pain Our Pleasure",
+    "author": "",
+    "fandom": "The Devil Probably (1977)",
+    "category": "Gen | M/M",
+    "rating": "Teen And Up Audiences",
+    "warnings": "No Archive Warnings Apply",
+    "language": "English",
+    "published": "",
+    "words": "",
+    "sourceUrl": "",
+    "summary": "It's raining in Paris. Meanwhile, in a drafty top-floor room, Charles and Valentin share a tin of sardines, a box of matches, and one mattress that is, naturally, too small for the both of them.",
+    "notes": "So I guess *this* happened. Huh. Well, uh. This is a quiet place. Either way, hopefully this time I got the formatting correct. To anyone who managed to find this: enjoy!",
+    "categories": [
+      "Gen",
+      "M/M"
+    ],
+    "relationships": [
+      "Charles & Valentin"
+    ],
+    "characters": [
+      "Charles",
+      "Valentin",
+      "Edwige (mentioned)",
+      "Alberte (mentioned)",
+      "Michel (mentioned) - Character"
+    ],
+    "tags": [
+      "a little bit of overthinking",
+      "Later That Night...",
+      "shameless nihilism",
+      "i love a rainy night!",
+      "References to Ancient Rome",
+      "late 1970s",
+      "Cigarette smoking?",
+      "what have I done?",
+      "I Wrote This While Listening to Television",
+      "Existential Dread"
+    ],
+    "chapters": [
+      {
+        "title": "Chapter 1",
+        "src": "./works/is-this-pain-our-pleasure/chapter-1.html"
       }
     ]
   }

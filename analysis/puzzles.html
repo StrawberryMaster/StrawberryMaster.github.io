@@ -285,7 +285,6 @@
 </head>
 
 <body class="puzzle-page">
-    <header id="construction-bar">Under construction</header>
     <header id="header-area">
         <header id="header-image"></header>
         <nav id="navbar">
@@ -295,6 +294,11 @@
                 <li><a href="../collections">Collections</a></li>
                 <li><a href="../analysis"><u>Analysis</u></a></li>
             </ul>
+        </nav>
+        <nav id="breadcrumb" aria-label="breadcrumb">
+          <a href="../">Home</a> &rsaquo;
+          <a href="../analysis">Analysis</a> &rsaquo;
+          <span aria-current="page">Puzzles</span>
         </nav>
     </header>
 
@@ -327,8 +331,10 @@
             <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
         </div>
 
-        <p id="actual-quote"></p>
-        <p id="quote-author"></p>
+        <div id="quote-container" aria-live="polite">
+          <p id="actual-quote"></p>
+          <p id="quote-author"></p>
+        </div>
     </footer>
 
     <script>

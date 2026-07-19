@@ -14,7 +14,6 @@
     <script src="scripts/quotes.js"></script>
   </head>
   <body class="not-found-page">
-  <header id="construction-bar">Under construction</header>
   <header id="header-area">
   <header id="header-image"></header>
   <nav id="navbar">
@@ -26,18 +25,59 @@
    </ul>
   </nav>
   </header>
-  
+
   <main id="main-container">
+    <h1>There's nothing here... yet.</h1>
+    <p>There really is nothing here. Really. You can trust me. But maybe there should be?</p>
+
+    <p>As a consolation prize, here is a hopefully coherent Garfield strip.</p>
+    <img id="garfield" src="https://www.bgreco.net/garfield/daily/231201.png" alt="Garfield strip">
+    <script>
+      (function() {
+        const garfieldImg = document.getElementById('garfield');
+        const fallbackUrl = "https://www.bgreco.net/garfield/daily/231201.png";
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        function loadRandomGarfield() {
+          const start = new Date(2001, 1, 15);
+          const end = new Date();
+          const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+
+          const dd = String(randomDate.getDate()).padStart(2, '0');
+          const mm = String(randomDate.getMonth() + 1).padStart(2, '0');
+          const yy = String(randomDate.getFullYear()).slice(-2);
+
+          const dateStr = dd + mm + yy;
+          const url = `https://www.bgreco.net/garfield/daily/${dateStr}.png`;
+
+          const tester = new Image();
+          tester.onload = () => {
+            garfieldImg.src = url;
+          };
+          tester.onerror = () => {
+            attempts++;
+            if (attempts < maxAttempts) {
+              loadRandomGarfield();
+            } else {
+              garfieldImg.src = fallbackUrl;
+            }
+          };
+          tester.src = url;
+        }
+        loadRandomGarfield();
+      })();
+    </script>
+
     <figure class="avatar" style="float: right; margin-left: 1rem; width: 15rem; text-align: center; margin-top: 1rem; margin-bottom: 1rem;">
       <img src="images/SMDeadInHomestuck.png"
       alt="An image of StrawberryMaster as a Homestuck character; specifically Dave Strider with a sword on his chest, who has the Swiss flag in it, consisting of a + (plus) sign." style="width: 100%; height: auto; outline: .25rem ridge var(--accent-color);">
       <figcaption style="margin-top: 0.5rem; font-style: italic; font-size: 0.85rem;">We are experiencing technical difficulties.</figcaption>
     </figure>
-    <h1>There's nothing here... yet.</h1>
-    <p>There really is nothing here. Really. You can trust me. But maybe there should be?</p>
-    
-    <p>Why is this page missing? We asked some leading economists on this.</p>
-    
+
+
+    <p>Why is this page missing, though? We asked some leading economists on this.</p>
+
     <div class="economics-grid">
       <div class="economic-theory">
         <h4>Stagflation</h4>
@@ -128,7 +168,7 @@
         <p>The best outcome was unachievable, so you have arrived here instead.</p>
       </div>
     </div>
-    
+
     <p>You can return to the previous page now by clicking the button below. It's a pretty cool button, too. I love buttons. If all else fails, <a href="./">go back to the main page</a>.</p>
     <form style="align-items: center; display: flex; flex-flow: column">
       <input id="not-found-button" type="button" value="Go back" onclick="javascript:history.go(-1)">
@@ -148,16 +188,18 @@
     <a target="_blank" href="https://lucida.to/">
       <img alt="lucida" src="../buttons/lucida.gif" width="88" height="31">
     </a><br/>
-    
+
     <div id="footer-links">
       <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
       <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
-      <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> — 
+      <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
       <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
     </div>
-    
-    <p id="actual-quote"></p>
-    <p id="quote-author"></p>
+
+    <div id="quote-container" aria-live="polite">
+      <p id="actual-quote"></p>
+      <p id="quote-author"></p>
+    </div>
   </footer>
   </body>
 </html>

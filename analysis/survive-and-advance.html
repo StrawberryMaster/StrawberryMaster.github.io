@@ -424,7 +424,6 @@
 </head>
 
 <body class="survive-page">
-    <header id="construction-bar">Under construction</header>
     <header id="header-area">
         <header id="header-image"></header>
         <nav id="navbar">
@@ -435,10 +434,15 @@
                 <li><a href="../analysis"><u>Analysis</u></a></li>
             </ul>
         </nav>
+        <nav id="breadcrumb" aria-label="breadcrumb">
+          <a href="../">Home</a> &rsaquo;
+          <a href="../analysis">Analysis</a> &rsaquo;
+          <span aria-current="page">Survive and Advance</span>
+        </nav>
     </header>
 
     <main id="main-container">
-        <p class="recreation-note">This is a recreation of the original Survive and Advance
+        <p class="recreation-note">Also available on <a href="https://thecampaigntrail.net/survive/" target="_blank">The Campaign Trail dot net</a>!<br>This is a recreation of the original Survive and Advance
             game, hosted on American History USA (home of its more famous brother, The Campaign Trail), which can be
             found <a href="https://americanhistoryusa.com/survive-advance/" target="_blank">here</a> (<a
                 href="https://web.archive.org/web/*/https://americanhistoryusa.com/survive-advance/" target="_blank">see
@@ -465,11 +469,13 @@
             <a href="https://neocities.org/site/opapeldetrouxa" target="_blank">NC Profile</a> —
             <a href="https://letterboxd.com/thestrwbrry" target="_blank">Letterboxd</a> —
             <a href="https://www.last.fm/user/thestrwbrry" target="_blank">Last.FM</a> —
-            <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
+            <a href="https://avaliantstudentpenguin.tumblr.com/" target="_blank">Tumblr</a>
         </div>
 
-        <p id="actual-quote"></p>
-        <p id="quote-author"></p>
+        <div id="quote-container" aria-live="polite">
+          <p id="actual-quote"></p>
+          <p id="quote-author"></p>
+        </div>
     </footer>
 
     <script>

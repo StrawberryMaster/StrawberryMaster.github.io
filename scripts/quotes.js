@@ -7,6 +7,7 @@ class QuoteManager {
         this.quotes = [];
         this.availableQuoteIndices = [];
         this.isTransitioning = false;
+        this.abortController = null;
     }
     
     // helper method to shuffle the indices
@@ -23,6 +24,11 @@ class QuoteManager {
 
     // fetch and cache quotes
     async fetchQuotes() {
+        if (this.abortController) {
+            this.abortController.abort();
+        }
+        this.abortController = new AbortController();
+
         try {
             // checking the cache first
             const cachedData = this.getFromCache();
@@ -34,7 +40,8 @@ class QuoteManager {
                 headers: {
                     'Cache-Control': 'no-cache',
                     'Pragma': 'no-cache'
-                }
+                },
+                signal: this.abortController.signal
             });
 
             if (!response.ok) {
@@ -46,7 +53,11 @@ class QuoteManager {
             return quotes;
 
         } catch (error) {
-            console.error('Jinkies. Failed to fetch quotes:', error);
+            if (error.name === 'AbortError') {
+                console.log('Fetch aborted.');
+            } else {
+                console.error('Jinkies. Failed to fetch quotes:', error);
+            }
             // if available, fallback to embedded quotes
             return this.getFallbackQuotes();
         }
@@ -54,11 +65,15 @@ class QuoteManager {
 
     // cache management
     saveToCache(quotes) {
-        const cacheData = {
-            timestamp: Date.now(),
-            quotes: quotes
-        };
-        localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+        try {
+            const cacheData = {
+                timestamp: Date.now(),
+                quotes: quotes
+            };
+            localStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+        } catch (error) {
+            console.warn('Failed to save to localStorage:', error);
+        }
     }
 
     getFromCache() {
@@ -121,40 +136,53 @@ class QuoteManager {
     
         const quoteElement = document.getElementById('actual-quote');
         const authorElement = document.getElementById('quote-author');
+
+        if (!quoteElement || !authorElement) {
+            this.isTransitioning = false;
+            return;
+        }
     
-        // fade out!
-        await Promise.all([
-            this.fadeElement(quoteElement, 'out'),
-            this.fadeElement(authorElement, 'out')
-        ]);
-    
-        // update content
-        quoteElement.textContent = `${newQuote.quote}`;
-        authorElement.textContent = `— ${newQuote.author}`;
-    
-        // fade in!
-        await Promise.all([
-            this.fadeElement(quoteElement, 'in'),
-            this.fadeElement(authorElement, 'in')
-        ]);
-    
-        this.isTransitioning = false;
+        try {
+            // fade out!
+            await Promise.all([
+                this.fadeElement(quoteElement, 'out'),
+                this.fadeElement(authorElement, 'out')
+            ]);
+        
+            // update content
+            quoteElement.textContent = `${newQuote.quote}`;
+            authorElement.textContent = `— ${newQuote.author}`;
+        
+            // fade in!
+            await Promise.all([
+                this.fadeElement(quoteElement, 'in'),
+                this.fadeElement(authorElement, 'in')
+            ]);
+        } catch (error) {
+            console.error('Animation error:', error);
+        } finally {
+            this.isTransitioning = false;
+        }
     }
 
     // fade helper function
-    async fadeElement(element, direction) {
-        const duration = 500;
-        
-        return new Promise(resolve => {
-            const onTransitionEnd = () => {
-                element.removeEventListener('transitionend', onTransitionEnd);
-                resolve();
-            };
-            element.addEventListener('transitionend', onTransitionEnd);
-            
-            element.style.transition = `opacity ${duration}ms ease-in-out`;
-            element.style.opacity = direction === 'out' ? 0 : 1;
-        });
+    fadeElement(element, direction) {
+        const opacityStart = direction === 'out' ? 1 : 0;
+        const opacityEnd = direction === 'out' ? 0 : 1;
+
+        const animation = element.animate(
+            [
+                { opacity: opacityStart },
+                { opacity: opacityEnd }
+            ],
+            {
+                duration: 500,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            }
+        );
+
+        return animation.finished;
     }
 }
 
@@ -167,12 +195,13 @@ async function displayRandomQuote() {
         await quoteManager.animateQuoteTransition(quote);
     } catch (error) {
         console.error('Error displaying quote:', error);
-        // display fallback quote with error styling
         const quoteElement = document.getElementById('actual-quote');
         const authorElement = document.getElementById('quote-author');
-        quoteElement.textContent = "Sometimes the best quote is the one that makes you think.";
-        authorElement.textContent = "— Error Handler";
-        quoteElement.style.color = '#ff6b6b';
+        if (quoteElement && authorElement) {
+            quoteElement.textContent = "Sometimes the best quote is the one that makes you think.";
+            authorElement.textContent = "— Error Handler";
+            quoteElement.style.color = '#ff6b6b';
+        }
     }
 }
 
@@ -180,12 +209,15 @@ async function displayRandomQuote() {
 window.addEventListener('load', () => {
     displayRandomQuote();
     
-    // click-to-refresh functionality
-    document.getElementById('quote-footer').addEventListener('click', () => {
-        if (!quoteManager.isTransitioning) {
-            displayRandomQuote();
-        }
-    });
+    const container = document.getElementById('quote-container');
+    if (container) {
+        // click-to-refresh functionality
+        container.addEventListener('click', () => {
+            if (!quoteManager.isTransitioning) {
+                displayRandomQuote();
+            }
+        });
+    }
 
     // auto-refresh quote every 5 minutes — though you probably won't be here for that long, right?
     setInterval(() => {

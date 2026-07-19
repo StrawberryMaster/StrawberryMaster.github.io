@@ -69,7 +69,7 @@ const albumData = [
   { artist: "Michael Jackson", title: "Thriller", cover: "https://resources.tidal.com/images/6cecc1ea/421c/4535/bafa/f6d56cbfc756/320x320.jpg" },
   { artist: "Janet Jackson", title: "Damita Jo", cover: "https://resources.tidal.com/images/75343062/c435/41b9/9b42/11b44d9b1523/320x320.jpg" }, 
   { artist: "George Michael", title: "Patience", cover: "https://yt3.googleusercontent.com/f_iGMwB81onSpcW23-GEYoiyv_nfae3md_V4cKFJ5uOv4ws-8YJmWAGgOWmD5Pe00qpaql_jWT1W5nvh=w544-h544-l90-rj" },
-  { artist: "Tina Turner", title: "In Your Wildest Dreams", cover: "https://yt3.googleusercontent.com/f_iGMwB81onSpcW23-GEYoiyv_nfae3md_V4cKFJ5uOv4ws-8YJmWAGgOWmD5Pe00qpaql_jWT1W5nvh=w544-h544-l90-rj" },
+  { artist: "Tina Turner", title: "Wildest Dreams", cover: "https://yt3.googleusercontent.com/yAX83obtuojW8pXa-6z2uZhMpCueCEvTj3aT1GG2ikD4tACQxt1hZVuAllVZNciL3uH-LX8ziXJvC3mBGQ=w544-h544-l90-rj" },
   { artist: "a-ha", title: "Hunting High and Low", cover: "https://yt3.googleusercontent.com/Hl4_H5E5uxO1esv1hHPd9Y8Nbui-J0356F41rkK5rXTEty0zCfxjPa_yHKp24xcZDQInH28FiZM1HCpI=w544-h544-l90-rj" },
   
   { artist: "Alphaville", title: "The Breathtaking Blue", cover: "https://yt3.googleusercontent.com/gpJ3hEV2iZMHusRAsRUijML2NIiGt5Vl8Tt1cCjeR6JScXY8DNlh-XqikZz8mzNHxkom1Xup4uOYlpFK=w544-h544-l90-rj" },
@@ -90,135 +90,312 @@ const albumData = [
   { artist: "Marisa Monte", title: "Infinito Particular", cover: "https://yt3.googleusercontent.com/c_SVOJDCPh682P5651zr4SMfRQTAbRrm1_zmdXygpiJMSQ34YqP1KoF-pcJ79qNUA_8TCX1Oo__7CKjkmw=w544-h544-l90-rj" },
   { artist: "Eva Cassidy", title: "Simply Eva", cover: "https://yt3.googleusercontent.com/I1NHFSWk8hyWuaFI7k1APq5njwRQeRy8R9qPVlrZwM1N6CvO32uUffrUm676x6hT23GqYpZxqcRS7QT1TQ=w544-h544-l90-rj" },
   
+  { artist: "Preta Gil", title: "Prét-A-Porter", cover: "https://yt3.googleusercontent.com/5OXksDe4tWSCGKDmuB1YDpSW8_UkJPd8LMO5i8e1UI1DYKOFDmh2bJuLpju9LUGX5U7ozNQB4v-tXGJQ=w544-h544-s-l90-rj" },
+  { artist: "Kylie Minogue", title: "Kylie Minogue", cover: "https://yt3.googleusercontent.com/4s3RE4gmikjinkryLvzRsDeybwRhy7KJPVNix5B75G6w4ZisAVnJSvjXcjG7kbk9Q3oaoXjLnkrOJVs=w544-h544-l90-rj" },
+  { artist: "Aaliyah", title: "Aaliyah", cover: "https://yt3.googleusercontent.com/0lMgPyQ6dKxpMDcZ5PGOFnFHJjQYm9deWVpuMFFYDGqPPK4zup8WTZX2J3yeo4MngwnC4TYWUpwrp77fAQ=w544-h544-l90-rj" },
+  { artist: "Bryan Ferry", title: "Taxi", cover: "https://yt3.googleusercontent.com/mySO8bgJAIvJKb_-az4Jd-3nLUhhQJmFz-H-RZoHfuqaxG4DWDFcfmEZSUyVbT6ja7RPPZ36BAXYTa8=w544-h544-l90-rj" },
+  { artist: "dälek", title: "From Filthy Tongue of Gods and Griots", cover: "https://yt3.googleusercontent.com/GTVMfwe5mvWkcUDoO3kSvFLPX_fFHz02Oohf53MFVoQ1ZwteHWqEx-cphpBCjuxRhVfTk6UFXuSPXn4W=w544-h544-l90-rj" },
+  
+  { artist: "Roxette", title: "Crash! Boom! Bang!", cover: "https://yt3.googleusercontent.com/yiGUYdNWnGdv05YMHtbnIGcV8RqrdFuiysFWT2ujSrRJdjro5MNmDHxnSt46NxcL53qBk4YGk5q0uV6d=w544-h544-l90-rj" },
+  { artist: "Telekinesis", title: "12 Desperate Straight Lines", cover: "https://yt3.googleusercontent.com/H5KL5cWKzJMfzZBcEHzPVo2LB4_aC0lqGYtlW20ZKuXNf6p6Q4eLjWOtJqH5guaHI766UpEel-PoiMgD=w544-h544-l90-rj" },
+  { artist: "ee", title: "Ramadan", cover: "https://yt3.googleusercontent.com/aHANHSUYCocpivA-LEAukWhL1MjeimAMK8iw-q-m1qg-aqr2dA-KHe8yW7ZSEpQPDXj_QWMaefpstJxPvw=w544-h544-l90-rj" },
+  { artist: "The Brand New Heavies", title: "Brother Sister", cover: "https://yt3.googleusercontent.com/Xp0UfFEt0zzBOqeaLTATPi6mNsgz8zHjWH5iYaC4NktAkgqTpdB6hNYagSQLQunML58R544KnXTPSMoQ=w544-h544-l90-rj" },
+  { artist: "A Flock of Seagulls", title: "A Flock of Seagulls", cover: "https://yt3.googleusercontent.com/dK018LIk-85GIiDIkNGLWgC46AlDVbE3LJoksbQJwyZwf6ZKIKHKhFdoUH4u1Wr1ovTIC-kfqI_IEpkf=w544-h544-l90-rj" },
+  
 ];
 
-let reserveAlbums = [];
-const gridContainer = document.getElementById('album-grid');
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
-function init() {
-  const shuffled = shuffleArray([...albumData]);
-  const activeAlbums = shuffled.slice(0, 25);
-  reserveAlbums = shuffled.slice(25);
-
-  gridContainer.innerHTML = '';
-  activeAlbums.forEach(album => {
-    gridContainer.appendChild(createAlbumCard(album));
-  });
-}
-
-function createAlbumCard(album) {
-  const card = document.createElement('figure');
-  card.className = 'album-card';
-  card.setAttribute('draggable', true);
-  
-  card.albumData = album; 
-
-  card.innerHTML = `
-    <div class="album-inner">
-      <div class="album-front">
-        <img src="${album.cover}" alt="${album.title}" loading="lazy" draggable="false">
-      </div>
-      <div class="album-back">
-        <span class="album-artist">${album.artist}</span> 
-        <hr style="width: 50%; border-color: rgba(255,255,255,0.3); margin: 0.5rem auto;">
-        <span class="album-title"><em>${album.title}</em></span>
-      </div>
-    </div>
-  `;
-
-  card.addEventListener('dragstart', handleDragStart);
-  card.addEventListener('dragover', handleDragOver);
-  card.addEventListener('dragenter', handleDragEnter);
-  card.addEventListener('dragleave', handleDragLeave);
-  card.addEventListener('drop', handleDrop);
-  card.addEventListener('dragend', handleDragEnd);
-
-  card.addEventListener('dblclick', function() {
-    swapAlbum(this);
-  });
-
-  return card;
-}
-
-// double-click swap
-function swapAlbum(cardElement) {
-  if (reserveAlbums.length === 0) return;
-
-  // pick a random album from the reserve pool
-  const randomIndex = Math.floor(Math.random() * reserveAlbums.length);
-  const newAlbum = reserveAlbums[randomIndex];
-  
-  // take the old album from this card
-  const oldAlbum = cardElement.albumData;
-
-  // trade them!
-  reserveAlbums[randomIndex] = oldAlbum;
-  cardElement.albumData = newAlbum;
-
-  // update the card
-  cardElement.classList.add('swapping');
-
-  setTimeout(() => {
-    const img = cardElement.querySelector('img');
-    const artist = cardElement.querySelector('.album-artist');
-    const title = cardElement.querySelector('.album-title');
-
-    img.src = newAlbum.cover;
-    img.alt = newAlbum.title;
-    artist.textContent = newAlbum.artist;
-    title.innerHTML = `<em>${newAlbum.title}</em>`;
-
-    cardElement.classList.remove('swapping');
-  }, 300);
-}
-
-// drag and drop
-let draggedItem = null;
-
-function handleDragStart(e) {
-  draggedItem = this;
-  setTimeout(() => this.classList.add('dragging'), 0);
-}
-
-function handleDragOver(e) {
-  e.preventDefault(); 
-}
-
-function handleDragEnter(e) {
-  e.preventDefault();
-  this.classList.add('drag-over');
-}
-
-function handleDragLeave(e) {
-  this.classList.remove('drag-over');
-}
-
-function handleDrop(e) {
-  this.classList.remove('drag-over');
-  if (this !== draggedItem) {
-    const allCards = [...gridContainer.querySelectorAll('.album-card')];
-    const draggedIndex = allCards.indexOf(draggedItem);
-    const droppedIndex = allCards.indexOf(this);
+class AlbumGridManager {
+  constructor(albums, containerId) {
+    this.albumData = albums;
+    this.reserveAlbums = [];
+    this.gridContainer = document.getElementById(containerId);
     
-    if (draggedIndex < droppedIndex) {
-      this.parentNode.insertBefore(draggedItem, this.nextSibling);
-    } else {
-      this.parentNode.insertBefore(draggedItem, this);
+    // pointer events dragging logic
+    this.draggedItem = null;
+    this.startX = 0;
+    this.startY = 0;
+    this.isDragging = false;
+    this.pointerId = null;
+
+    // bind methods to context
+    this.handlePointerDown = this.handlePointerDown.bind(this);
+    this.handlePointerMove = this.handlePointerMove.bind(this);
+    this.handlePointerUp = this.handlePointerUp.bind(this);
+  }
+
+  shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  init() {
+    if (!this.gridContainer) return;
+
+    const shuffled = this.shuffleArray([...this.albumData]);
+    const activeAlbums = shuffled.slice(0, 25);
+    this.reserveAlbums = shuffled.slice(25);
+
+    this.gridContainer.innerHTML = '';
+    activeAlbums.forEach(album => {
+      this.gridContainer.appendChild(this.createAlbumCard(album));
+    });
+  }
+
+  createAlbumCard(album) {
+    const card = document.createElement('figure');
+    card.className = 'album-card';
+    card.setAttribute('draggable', 'false');
+    card.style.touchAction = 'none'; // prevents page-scroll while dragging on mobile
+
+    card.albumData = album; 
+
+    card.innerHTML = `
+      <div class="album-inner">
+        <div class="album-front">
+          <img src="${album.cover}" alt="${album.title}" loading="lazy" draggable="false">
+        </div>
+        <div class="album-back">
+          <span class="album-artist">${album.artist}</span> 
+          <hr style="width: 50%; border-color: rgba(255,255,255,0.3); margin: 0.5rem auto;">
+          <span class="album-title"><em>${album.title}</em></span>
+        </div>
+      </div>
+    `;
+
+    // touch and pointer events
+    card.addEventListener('pointerdown', this.handlePointerDown);
+
+    card.addEventListener('dblclick', () => {
+      this.swapAlbum(card);
+    });
+
+    return card;
+  }
+
+  // double-click swap
+  swapAlbum(cardElement) {
+    if (this.reserveAlbums.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * this.reserveAlbums.length);
+    const newAlbum = this.reserveAlbums[randomIndex];
+    const oldAlbum = cardElement.albumData;
+
+    this.reserveAlbums[randomIndex] = oldAlbum;
+    cardElement.albumData = newAlbum;
+
+    cardElement.classList.add('swapping');
+
+    setTimeout(() => {
+      const img = cardElement.querySelector('img');
+      const artist = cardElement.querySelector('.album-artist');
+      const title = cardElement.querySelector('.album-title');
+
+      if (img) {
+        img.src = newAlbum.cover;
+        img.alt = newAlbum.title;
+      }
+      if (artist) artist.textContent = newAlbum.artist;
+      if (title) title.innerHTML = `<em>${newAlbum.title}</em>`;
+
+      cardElement.classList.remove('swapping');
+    }, 300);
+  }
+
+  handlePointerDown(e) {
+    // only left clicks or primary touch inputs
+    if (e.button !== 0) return;
+
+    const card = e.currentTarget;
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    this.pointerId = e.pointerId;
+    this.draggedItem = card;
+    this.isDragging = false;
+
+    card.setPointerCapture(e.pointerId);
+    card.addEventListener('pointermove', this.handlePointerMove);
+    card.addEventListener('pointerup', this.handlePointerUp);
+    card.addEventListener('pointercancel', this.handlePointerUp);
+  }
+
+  handlePointerMove(e) {
+    if (!this.draggedItem || e.pointerId !== this.pointerId) return;
+
+    const dx = e.clientX - this.startX;
+    const dy = e.clientY - this.startY;
+    const moveThreshold = 5;
+
+    if (!this.isDragging) {
+      if (Math.hypot(dx, dy) > moveThreshold) {
+        this.isDragging = true;
+        this.draggedItem.classList.add('dragging');
+        this.gridContainer.classList.add('is-dragging');
+        
+        // clear active browser selection ranges
+        window.getSelection()?.removeAllRanges();
+      } else {
+        return;
+      }
+    }
+
+    // suppress native touch actions and browser selection tasks
+    if (e.cancelable) e.preventDefault();
+
+    // update physical visual coordinate translations of the dragged item
+    this.draggedItem.style.transform = `translate3d(${dx}px, ${dy}px, 0px) scale(1.05) rotate(2deg)`;
+
+    // identify sibling element beneath the pointer coordinates
+    this.draggedItem.style.pointerEvents = 'none';
+    const elementUnder = document.elementFromPoint(e.clientX, e.clientY);
+    this.draggedItem.style.pointerEvents = '';
+
+    const target = elementUnder ? elementUnder.closest('.album-card') : null;
+
+    if (target && target !== this.draggedItem && target.parentNode === this.gridContainer) {
+      const cards = [...this.gridContainer.querySelectorAll('.album-card')];
+      const draggedIndex = cards.indexOf(this.draggedItem);
+      const targetIndex = cards.indexOf(target);
+
+      const targetRect = target.getBoundingClientRect();
+      const beforeRect = this.draggedItem.getBoundingClientRect();
+
+      // determine the primary axis of separation between the dragged item and the target
+      const isHorizontal = Math.abs(targetRect.left - beforeRect.left) >= Math.abs(targetRect.top - beforeRect.top);
+
+      let shouldSwap = false;
+      if (isHorizontal) {
+        const midpointX = targetRect.left + targetRect.width / 2;
+        if (draggedIndex < targetIndex) {
+          // dragging right
+          if (e.clientX > midpointX) shouldSwap = true;
+        } else {
+          // dragging left
+          if (e.clientX < midpointX) shouldSwap = true;
+        }
+      } else {
+        const midpointY = targetRect.top + targetRect.height / 2;
+        if (draggedIndex < targetIndex) {
+          // dragging down
+          if (e.clientY > midpointY) shouldSwap = true;
+        } else {
+          // dragging up
+          if (e.clientY < midpointY) shouldSwap = true;
+        }
+      }
+
+      if (shouldSwap) {
+        // capture structural dimensions prior to DOM structural changes
+        const rects = cards.map(c => c.getBoundingClientRect());
+
+        // perform reordering step
+        if (draggedIndex < targetIndex) {
+          this.gridContainer.insertBefore(this.draggedItem, target.nextSibling);
+        } else {
+          this.gridContainer.insertBefore(this.draggedItem, target);
+        }
+
+        // calculate translation offset caused by reordering
+        const afterRect = this.draggedItem.getBoundingClientRect();
+        const shiftX = beforeRect.left - afterRect.left;
+        const shiftY = beforeRect.top - afterRect.top;
+
+        // calibrate reference points to maintain exact visual alignment with the pointer
+        this.startX -= shiftX;
+        this.startY -= shiftY;
+
+        // update transform to align with adjusted pointer anchors
+        const updatedDx = e.clientX - this.startX;
+        const updatedDy = e.clientY - this.startY;
+        this.draggedItem.style.transform = `translate3d(${updatedDx}px, ${updatedDy}px, 0px) scale(1.05) rotate(2deg)`;
+
+        const newCards = [...this.gridContainer.querySelectorAll('.album-card')];
+        
+        // batch FLIP reads
+        const offsets = newCards.map(card => {
+          if (card === this.draggedItem) return null;
+          const oldIndex = cards.indexOf(card);
+          const oldRect = rects[oldIndex];
+          const newRect = card.getBoundingClientRect();
+          return {
+            card,
+            dX: oldRect.left - newRect.left,
+            dY: oldRect.top - newRect.top
+          };
+        });
+
+        // apply transformations as write operations
+        offsets.forEach(offset => {
+          if (!offset) return;
+          const { card, dX, dY } = offset;
+          if (dX !== 0 || dY !== 0) {
+            card.style.transition = 'none';
+            card.style.transform = `translate3d(${dX}px, ${dY}px, 0)`;
+          }
+        });
+
+        // trigger exactly one global reflow to batch styles
+        this.gridContainer.offsetHeight;
+
+        // run animations
+        offsets.forEach(offset => {
+          if (!offset) return;
+          const { card, dX, dY } = offset;
+          if (dX !== 0 || dY !== 0) {
+            card.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            card.style.transform = 'translate3d(0, 0, 0)';
+          }
+        });
+      }
     }
   }
+
+  handlePointerUp(e) {
+    if (!this.draggedItem || e.pointerId !== this.pointerId) return;
+
+    const card = this.draggedItem;
+
+    card.removeEventListener('pointermove', this.handlePointerMove);
+    card.removeEventListener('pointerup', this.handlePointerUp);
+    card.removeEventListener('pointercancel', this.handlePointerUp);
+
+    if (this.pointerId !== null) {
+      card.releasePointerCapture(this.pointerId);
+      this.pointerId = null;
+    }
+
+    if (this.isDragging) {
+      card.classList.remove('dragging');
+      this.gridContainer.classList.remove('is-dragging');
+
+      // visually transition held card to its settled grid position
+      card.style.transition = 'transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)';
+      card.style.transform = 'translate3d(0, 0, 0)';
+
+      const finalizeReset = () => {
+        card.style.transition = '';
+        card.style.transform = '';
+
+        // sweep remaining inline sibling transitions
+        this.gridContainer.querySelectorAll('.album-card').forEach(c => {
+          c.style.transition = '';
+          c.style.transform = '';
+        });
+
+        card.removeEventListener('transitionend', finalizeReset);
+      };
+      card.addEventListener('transitionend', finalizeReset);
+    }
+
+    this.draggedItem = null;
+    this.isDragging = false;
+  }
 }
 
-function handleDragEnd(e) {
-  this.classList.remove('dragging');
-  gridContainer.querySelectorAll('.album-card').forEach(c => c.classList.remove('drag-over'));
-}
-
-document.addEventListener('DOMContentLoaded', init);
+// initialize on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  const manager = new AlbumGridManager(albumData, 'album-grid');
+  manager.init();
+});

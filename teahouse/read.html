@@ -6,9 +6,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Teahouse Reader</title>
   <meta name="description" content="Read imported teahouse works directly on the site.">
-  <meta name="keywords" content="teahouse, reader, stories, ao3, archive of our own, fanfiction">
   <meta name="author" content="StrawberryMaster">
   <meta name="theme-color" content="#213E28">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://opapeldetrouxa.neocities.org/">
+  <meta property="og:title" content="The Teahouse Reader: read stories & essays">
+  <meta property="og:description" content="Read stories from the Teahouse directly in your browser with chapter navigation, notes and metadata.">
+  <meta property="og:image" content="https://i.pinimg.com/1200x/26/d2/a9/26d2a96a6105671a0f825100aa083457.jpg">
+  <meta property="og:site_name" content="pipe-o-blaster">
+  <meta property="og:locale" content="en_US">
+    
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Teahouse Reader: read stories & essays">
+  <meta name="twitter:description" content="Read stories from the Teahouse directly in your browser with chapter navigation, notes and metadata.">
+  <meta name="twitter:image" content="https://i.pinimg.com/1200x/26/d2/a9/26d2a96a6105671a0f825100aa083457.jpg">
+  
   <link href="../style.css" rel="stylesheet" type="text/css" media="all">
   <link rel="icon" type="image/x-icon" href="../files/wizardry.ico">
   <script src="../scripts/quotes.js"></script>
@@ -16,7 +29,6 @@
 </head>
 
 <body class="teahouse-page teahouse-reader-page">
-  <header id="construction-bar">Under construction</header>
   <header id="header-area">
     <header id="header-image"></header>
     <nav id="navbar">
@@ -42,7 +54,7 @@
     <hr />
     <a class="reader-back-link" id="reader-back-link" href="../teahouse">Back to teahouse</a>
     <br />
-    <a class="reader-back-link" id="reader-ao3-link" href="#" target="_blank" rel="noopener noreferrer">Open on AO3</a>
+    <a class="reader-back-link" id="reader-ao3-link" href="#" target="_blank" rel="noopener noreferrer">Open externally</a>
   </nav>
 
   <main id="main-container" class="reader-shell">
@@ -56,14 +68,14 @@
 
       <div id="reader-notes-section" class="reader-notes-section" style="display: none;">
         <div class="reader-note-block">
-          <p><strong>Author's Notes</strong></p>
+          <p><strong>Author's notes</strong></p>
           <blockquote class="userstuff" id="reader-notes"></blockquote>
         </div>
       </div>
 
       <div class="reader-actions">
         <a class="reader-chip" id="reader-back-link-top" href="../teahouse">Back to teahouse</a>
-        <a class="reader-chip" id="reader-ao3-link-top" href="#" target="_blank" rel="noopener noreferrer">Read on AO3</a>
+        <a class="reader-chip" id="reader-ao3-link-top" href="#" target="_blank" rel="noopener noreferrer">Read externally</a>
       </div>
     </section>
 
@@ -99,8 +111,10 @@
       <a href="https://felofooo.tumblr.com/" target="_blank">Tumblr</a>
     </div>
 
-    <p id="actual-quote"></p>
-    <p id="quote-author"></p>
+    <div id="quote-container" aria-live="polite">
+      <p id="actual-quote"></p>
+      <p id="quote-author"></p>
+    </div>
   </footer>
 
   <button class="back-to-top" aria-label="Back to top">

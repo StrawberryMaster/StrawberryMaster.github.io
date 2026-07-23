@@ -141,13 +141,17 @@
         infoTimeoutId = setTimeout(() => {
             const activeBook = bookData[activeIndex];
             if (!activeBook) return;
+            
             infoPanel.innerHTML = `
-              <h3>${activeBook.title}</h3>
-              <p class="author">${activeBook.author}</p>
-              <div class="book-card-details">
-                ${activeBook.detailsHtml}
-              </div>
+              <h3 class="info-title"></h3>
+              <p class="author"></p>
+              <div class="book-card-details"></div>
             `;
+            
+            infoPanel.querySelector('.info-title').innerHTML = activeBook.title;
+            infoPanel.querySelector('.author').textContent = activeBook.author;
+            infoPanel.querySelector('.book-card-details').innerHTML = activeBook.detailsHtml;
+
             infoPanel.style.opacity = '1';
             infoPanel.style.transform = 'scale(1)';
         }, 150);

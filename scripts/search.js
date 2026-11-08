@@ -7,88 +7,104 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (!searchInput || !storyGrid) return;
 
-  // create an array of objects with the card element and its searchable text
+  // helper to normalize text
+  function normalizeText(text) {
+    return (text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
+
+  // pre-index cards into JS objects with normalized text
   const searchableCards = Array.from(storyCards).map(card => {
-      const title = card.querySelector('.story-title')?.textContent.toLowerCase() || '';
-      const meta = card.querySelector('.story-meta')?.textContent.toLowerCase() || '';
-      const description = card.querySelector('p')?.textContent.toLowerCase() || '';
-      const links = Array.from(card.querySelectorAll('a'))
-          .map(link => link.textContent.toLowerCase())
-          .join(' ');
-      
-      return {
-          element: card,
-          searchText: `${title} ${meta} ${description} ${links}`
-      };
+    const title = card.querySelector('.story-title')?.textContent || '';
+    const meta = card.querySelector('.story-meta')?.textContent || '';
+    const description = card.querySelector('p')?.textContent || '';
+    const links = Array.from(card.querySelectorAll('a'))
+      .map(link => link.textContent)
+      .join(' ');
+    
+    return {
+      element: card,
+      searchText: normalizeText(`${title} ${meta} ${description} ${links}`)
+    };
   });
   
+  // debounce helper
   function debounce(func, delay) {
     let timeout;
-    return function(...args) {
+    const debounced = function(...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), delay);
     };
+    debounced.cancel = () => clearTimeout(timeout);
+    return debounced;
+  }
+
+  function updateClearButton() {
+    if (clearButton) {
+      clearButton.classList.toggle('hidden', !searchInput.value.trim());
+    }
   }
   
   function filterStories() {
-      const query = searchInput.value.toLowerCase().trim();
-      let visibleCount = 0;
+    const rawQuery = searchInput.value.trim();
+    const normalizedQuery = normalizeText(rawQuery);
+    const searchTerms = normalizedQuery.split(/\s+/).filter(Boolean);
+    
+    let visibleCount = 0;
 
-      const searchTerms = query.split(/\s+/).filter(Boolean);
+    // batch DOM updates in the next animation frame
+    requestAnimationFrame(() => {
+      storyGrid.classList.toggle('filtered', !!normalizedQuery);
       
-      // batch DOM updates in the next animation frame to prevent layout thrashing
-      requestAnimationFrame(() => {
-          storyGrid.classList.toggle('filtered', !!query);
-          
-          searchableCards.forEach(({ element, searchText }) => {
-              const isMatch = searchTerms.every(term => searchText.includes(term));
-              
-              // toggle visibility based on match
-              const shouldBeHidden = !isMatch && searchTerms.length > 0;
-              element.classList.toggle('hidden', shouldBeHidden);
+      searchableCards.forEach(({ element, searchText }) => {
+        // match if *every* term in the query exists in the card's text
+        const isMatch = searchTerms.every(term => searchText.includes(term));
+        const shouldBeHidden = !isMatch && searchTerms.length > 0;
+        
+        element.classList.toggle('hidden', shouldBeHidden);
 
-              if (!shouldBeHidden) {
-                  visibleCount++;
-              }
-          });
-
-          if (noResults) {
-              noResults.style.display = (visibleCount === 0 && query) ? 'block' : 'none';
-          }
+        if (!shouldBeHidden) {
+          visibleCount++;
+        }
       });
+
+      if (noResults) {
+        noResults.style.display = (visibleCount === 0 && normalizedQuery) ? 'block' : 'none';
+      }
+    });
   }
 
-  // debouncing to avoid excessive filtering while typing
   const debouncedFilter = debounce(filterStories, 200);
-  
-  if (clearButton) {
-      clearButton.addEventListener('click', () => {
-        searchInput.value = '';
-        clearButton.classList.add('hidden');
-        filterStories();
-        searchInput.focus();
-      });
+
+  function resetSearch() {
+    debouncedFilter.cancel();
+    searchInput.value = '';
+    updateClearButton();
+    filterStories();
   }
-  
+
+  // event listeners
   searchInput.addEventListener('input', () => {
-    if (clearButton) {
-        clearButton.classList.toggle('hidden', !searchInput.value.trim());
-    }
+    updateClearButton();
     debouncedFilter();
   });
   
   searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      searchInput.value = '';
-      if (clearButton) {
-          clearButton.classList.add('hidden');
-      }
-      filterStories();
+      resetSearch();
     }
   });
   
   if (clearButton) {
-      clearButton.classList.toggle('hidden', !searchInput.value.trim());
+    clearButton.addEventListener('click', () => {
+      resetSearch();
+      searchInput.focus();
+    });
   }
+  
+  // initial state setup
+  updateClearButton();
   filterStories();
 });

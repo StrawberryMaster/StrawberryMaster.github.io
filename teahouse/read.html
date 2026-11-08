@@ -60,6 +60,7 @@
   <main id="main-container" class="reader-shell">
     <section class="reader-intro">
       <div class="reader-kicker">Teahouse Reader</div>
+      <img id="reader-cover" class="reader-cover" alt="" hidden>
       <h1 id="reader-title" class="reader-title">Loading work...</h1>
       <p id="reader-status" class="reader-status"></p>
       <p id="reader-summary" class="reader-summary"></p>
@@ -76,7 +77,11 @@
       <div class="reader-actions">
         <a class="reader-chip" id="reader-back-link-top" href="../teahouse">Back to teahouse</a>
         <a class="reader-chip" id="reader-ao3-link-top" href="#" target="_blank" rel="noopener noreferrer">Read externally</a>
+        <button class="reader-chip reader-download" id="download-html" type="button">Download HTML</button>
+        <button class="reader-chip reader-download" id="download-epub" type="button">Download EPUB</button>
+        <button class="reader-chip reader-download" id="download-pdf" type="button">Print / save PDF</button>
       </div>
+      <p class="reader-download-status" id="reader-download-status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="reader-controls" aria-label="Chapter controls">

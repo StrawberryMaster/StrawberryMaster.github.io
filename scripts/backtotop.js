@@ -1,44 +1,29 @@
 /* for the analysis page */
 document.addEventListener('DOMContentLoaded', function() {
     const backToTopButton = document.querySelector('.back-to-top');
+    if (!backToTopButton) return; // don't run if the button isn't on the page.
 
-    // don't run if the button isn't on the page.
-    if (!backToTopButton) {
-        return;
-    }
+    // create a dummy sentinel element
+    const topSentinel = document.createElement('div');
+    topSentinel.style.position = 'absolute';
+    topSentinel.style.top = '300px';
+    topSentinel.style.height = '1px';
+    topSentinel.style.width = '1px';
+    topSentinel.style.pointerEvents = 'none';
+    document.body.prepend(topSentinel);
 
-    const SCROLL_THRESHOLD = 300;
+    // observe when this point leaves/enters the screen
+    const observer = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        backToTopButton.classList.toggle('show', !entry.isIntersecting);
+    });
 
-    // utility function to limit how often the scroll handler runs
-    function throttle(func, limit) {
-        let inThrottle;
-        return function(...args) {
-            if (!inThrottle) {
-                func.apply(this, args);
-                inThrottle = true;
-                setTimeout(() => inThrottle = false, limit);
-            }
-        };
-    }
+    observer.observe(topSentinel);
 
-    function toggleVisibility() {
-        backToTopButton.classList.toggle('show', window.scrollY > SCROLL_THRESHOLD);
-    }
-
-    function scrollToTop(e) {
+    // click handler
+    backToTopButton.addEventListener('click', (e) => {
         e.preventDefault();
-        
-        // this sends the user's focus to the top of the page along with their viewport.
         document.body.focus({ preventScroll: true });
-
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-
-    toggleVisibility();
-
-    window.addEventListener('scroll', throttle(toggleVisibility, 100));
-    backToTopButton.addEventListener('click', scrollToTop);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 });
